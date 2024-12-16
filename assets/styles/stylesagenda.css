@@ -1,0 +1,188 @@
+
+
+/* ----------------------- */
+
+/* Container principal do dashboard */
+.dashboard-container {
+    padding: 20px;
+    margin-top: 50px; /* Adicione uma margem se houver um menu fixo */
+}
+
+/* Estilo dos cards de resumo */
+.dashboard-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.summary-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.summary-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.summary-card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #e67e00;
+}
+
+/* Botões de ação rápida */
+.quick-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.quick-actions button {
+    background-color: #e67e00;
+    color: white;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.quick-actions button:hover {
+    background-color: #e67e00;
+}
+
+/* Estilo para a tabela de chamados */
+.recent-calls {
+    margin-top: 40px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background-color: #e67e00;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .dashboard-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+h1 {
+    color: #343a40;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    padding: 10px;
+    background-color: #e67e00;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.calendar-header button:hover {
+    background-color: #e67e00;
+}
+
+.view-options {
+    display: flex;
+    gap: 10px;
+}
+
+.view-options button {
+    padding: 10px;
+    background-color: #e67e00;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.view-options button:hover {
+    background-color: #e67e00;
+}
+
+.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.calendar th, .calendar td {
+    border: 1px solid #ccc;
+    padding: 30px; /* Aumentar o padding para dar espaço */
+    text-align: left; /* Alinhar o texto à esquerda */
+    position: relative; /* Para usar o posicionamento absoluto */
+}
+
+.calendar th {
+    background-color: #e67e00;
+    color: white;
+}
+
+.calendar td {
+    background-color: #fff;
+}
+
+.day-number {
+    position: absolute; /* Posicionar o número do dia de forma absoluta */
+    top: 5px; /* Distância do topo */
+    right: 5px; /* Distância da direita */
+    background-color: gray; /* Fundo azul */
+    color: white; /* Texto branco */
+    border-radius: 4px; /* Borda arredondada */
+    padding: 5px; /* Espaçamento interno */
+}
+
+.has-appointment {
+    background-color: #ffcc00; /* Cor de fundo para dias com agendamentos */
+}
+
+.report-button {
+background-color: #28a745; /* Cor verde */
+color: white; /* Texto branco */
+border: none;
+border-radius: 5px;
+padding: 5px 10px;
+cursor: pointer;
+font-size: 14px;
+margin-top: 5px;
+}
+
+.report-button:hover {
+background-color: #218838; /* Cor verde escuro ao passar o mouse */
+}

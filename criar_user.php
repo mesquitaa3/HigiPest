@@ -1,0 +1,91 @@
+<?php
+// Conexão com bd
+$servername = "localhost";
+$username = "web";
+$password = "web";
+$dbname = "web-project";
+
+// Criar a conexão
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Verificar se existe conexao
+if (!$conn) {
+    die("Conexão falhou: " . mysqli_connect_error());
+}
+
+// verificar se o form enviou dados para criar user
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $nome = mysqli_real_escape_string($conn, $_POST['nome']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $palavrapasse = mysqli_real_escape_string($conn, $_POST['palavra-passe']);
+    $cargo = mysqli_real_escape_string($conn, $_POST['cargo']);
+
+    // encriptar palavra-passe 
+    $palavrapasse_encriptada = password_hash($palavrapasse, PASSWORD_DEFAULT);
+
+    //inserir dados na tabela de utilizadores
+    $sql = "INSERT INTO utilizadores (nome, email, palavra_passe, cargo) 
+            VALUES ('$nome', '$email', '$palavrapasse_encriptada', '$cargo')";
+
+    //verificar se o utilizador é criadp
+    if (mysqli_query($conn, $sql)) {
+        echo "utilizador criado";
+    } else {
+        echo "Erro: " . mysqli_error($conn);
+    }
+}
+
+
+mysqli_close($conn);
+?>
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Usuário</title>
+    <!-- Link para o Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Criar utilizador</h2>
+
+    <!-- form para criar user -->
+    <form action="criar_user.php" method="POST">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="palavra-passe" class="form-label">palavra-passe</label>
+            <input type="password" class="form-control" id="palavra-passe" name="palavra-passe" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="cargo" class="form-label">Cargo</label>
+            <select class="form-select" id="cargo" name="cargo" required>
+                <option value="cliente">Cliente</option>
+                <option value="administrador">Administrador</option>
+                <option value="tecnico">Técnico</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Criar</button>
+    </form>
+</div>
+
+<!-- Link para o Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
