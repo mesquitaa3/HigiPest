@@ -12,9 +12,10 @@
 
 <body id="body-menu"> <!-- Adicionando o ID aqui -->
 
+<?php require('../menu.php'); ?> <!-- Inclui menu - menu.php -->
 
 
-    <h1>Agenda Diária - ORPC</h1>
+    <h1>Agenda</h1>
 
 <div class="calendar-header">
     <button id="prev-period">&lt; Anterior</button>

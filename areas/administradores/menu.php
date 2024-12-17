@@ -17,11 +17,11 @@
                     <a class="nav-link" href="/web/areas/administradores/agendamento.php">Agendamento</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownClientes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="dropdownClientes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Clientes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownClientes">
-                        <li><a class="dropdown-item" href="#">Clientes</a></li>
+                        <li><a class="dropdown-item" href="/web/areas/administradores/plataforma/clientes/tabelaclientes.php">Clientes</a></li>
                         <li><a class="dropdown-item" href="#">Contratos</a></li>
                         <li><a class="dropdown-item" href="#">Propostas</a></li>
                     </ul>
