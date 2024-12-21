@@ -5,14 +5,14 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Verificar se o ID do cliente foi passado na URL
+//verifica o id do cliente
 if (isset($_GET['id_cliente'])) {
     $id_cliente = $_GET['id_cliente'];
 
-    // Atualizar o status de visibilidade do cliente para 0 (ocultar)
+    //atualizar o cliente para visivel = 1 (ativo)
     $query = "UPDATE clientes SET visivel = 0 WHERE id_cliente = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $id_cliente);

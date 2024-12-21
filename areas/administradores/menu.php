@@ -22,7 +22,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownClientes">
                         <li><a class="dropdown-item" href="/web/areas/administradores/plataforma/clientes/tabelaclientes.php">Clientes</a></li>
-                        <li><a class="dropdown-item" href="#">Contratos</a></li>
+                        <li><a class="dropdown-item" href="/web/areas/administradores/plataforma/contratos/tabelacontratos.php">Contratos</a></li>
                         <li><a class="dropdown-item" href="#">Propostas</a></li>
                     </ul>
                 </li>

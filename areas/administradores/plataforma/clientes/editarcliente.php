@@ -5,32 +5,32 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Verifica se o ID do cliente foi passado como parâmetro
+//verificar id do cliente
 if (!isset($_GET['id_cliente']) || !is_numeric($_GET['id_cliente'])) {
-    header("Location: tabelaclientes.php"); // Redireciona para a página de clientes caso o ID não seja válido
+    header("Location: tabelaclientes.php"); //se o id nao for valido, volta para a pagina tabelaclientes.php
     exit();
 }
 
 $id_cliente = $_GET['id_cliente'];
 
-// Buscar os dados do cliente
+//seleciona os dados do cliente
 $query = "SELECT * FROM clientes WHERE id_cliente = $id_cliente";
 $result = $conn->query($query);
 
-// Verifica se o cliente foi encontrado
+//verifica se o cliente foi encontrado
 if ($result->num_rows == 0) {
-    header("Location: tabelaclientes.php");  // Redireciona se o cliente não for encontrado
+    header("Location: tabelaclientes.php");  //volta para a pagina tabelaclientes.php se o cliente nao for encontrado
     exit();
 }
 
 $cliente = $result->fetch_assoc();
 
-// Processar a atualização do cliente
+//atualiza dados do cliente
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Coletar os dados do formulário
+    //guarda dados do form de editar
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $telemovel = $_POST['telemovel'];
@@ -38,18 +38,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $codigo_postal = $_POST['codigo_postal'];
     $zona = $_POST['zona'];
 
-    // Validar os dados (exemplo simples, você pode adicionar mais validações)
+    //verifica se todos os dados estão preenchidos
     if (empty($nome) || empty($email) || empty($telemovel) || empty($morada) || empty($codigo_postal) || empty($zona)) {
         $error_message = "Por favor, preencha todos os campos!";
     } else {
-        // Atualizar os dados na tabela de clientes
+        //atualiza os dados do cliente na tabela clientes
         $update_query = "UPDATE clientes 
                          SET nome_cliente = '$nome', email_cliente = '$email', telemovel_cliente = '$telemovel', 
                              morada_cliente = '$morada', codigopostal_cliente = '$codigo_postal', zona_cliente = '$zona'
                          WHERE id_cliente = $id_cliente";
         
         if ($conn->query($update_query) === TRUE) {
-            // Redirecionar para a página de clientes com a mensagem de sucesso
+            //volta para a pagina tabelaclientes.php com a mmensagem de sucesso
             header("Location: tabelaclientes.php?msg=cliente_atualizado");
             exit();
         } else {
@@ -90,7 +90,7 @@ $conn->close();
     }
     ?>
 
-    <!-- Formulário de edição do cliente -->
+    <!-- form para editar cliente -->
     <form action="editarcliente.php?id_cliente=<?php echo $id_cliente; ?>" method="POST">
         <div class="form-group mb-3">
             <label for="nome">Nome:</label>

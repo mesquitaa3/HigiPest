@@ -5,11 +5,11 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao base de dados
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Coletar os dados do formulário
+    //guardar dados do form de criar cliente
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $telemovel = $_POST['telemovel'];
@@ -17,20 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $codigo_postal = $_POST['codigo_postal'];
     $zona = $_POST['zona'];
 
-    // Validar os dados (exemplo simples, você pode adicionar mais validações)
+    //verificar se todos os campos estão preenchidos
     if (empty($nome) || empty($email) || empty($telemovel) || empty($morada) || empty($codigo_postal) || empty($zona)) {
         $error_message = "Por favor, preencha todos os campos!";
     } else {
-        // Inserir dados na tabela de clientes, incluindo o campo 'visivel' com valor 1
+        //guardar os dados na tabela cliente, visivel = 1 para o cliente estar ativo
         $query = "INSERT INTO clientes (nome_cliente, email_cliente, telemovel_cliente, morada_cliente, codigopostal_cliente, zona_cliente, visivel)
                   VALUES ('$nome', '$email', '$telemovel', '$morada', '$codigo_postal', '$zona', 1)";
         
         if ($conn->query($query) === TRUE) {
-            // Redireciona para 'tabelaclientes.php' com uma mensagem de sucesso
+            //volta para a pagina tabelaclientes.php com mensagem de sucesso
             header("Location: tabelaclientes.php?msg=cliente_adicionado");
             exit();
         } else {
-            // Redireciona para 'tabelaclientes.php' com uma mensagem de erro
+            //volta para a pagina tabelaclientes.php com mensagem de erro
             header("Location: tabelaclientes.php?msg=erro_adicionando_cliente");
             exit();
         }
