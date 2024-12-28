@@ -1,28 +1,28 @@
 <!-- menu-admin-page.php -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/web/areas/administradores/index.php">Administração</a> <!-- nome do admin que tem login feito -->
+        <a class="navbar-brand" href="/web/areas/tecnicos/index.php">tecnico</a> <!-- nome do admin que tem login feito -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/areas/administradores/index.php">Home</a>
+                    <a class="nav-link" href="/web/areas/tecnicos/index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/areas/administradores/plataforma/agenda/agenda.php">Agenda</a>
+                    <a class="nav-link" href="/web/areas/tecnicos/agenda.php">Agenda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/areas/administradores/plataforma/agenda/agendamento.php">Agendamento</a>
+                    <a class="nav-link" href="#">Agendamento</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdownClientes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Clientes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownClientes">
-                        <li><a class="dropdown-item" href="/web/areas/administradores/plataforma/clientes/tabelaclientes.php">Clientes</a></li>
-                        <li><a class="dropdown-item" href="/web/areas/administradores/plataforma/contratos/tabelacontratos.php">Contratos</a></li>
+                        <li><a class="dropdown-item" href="#">Clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Contratos</a></li>
                         <li><a class="dropdown-item" href="#">Propostas</a></li>
                     </ul>
                 </li>
@@ -64,7 +64,7 @@
                         Configurações
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownConfiguracoes">
-                        <li><a class="dropdown-item" href="/web/areas/administradores/site/index.php">Site</a></li>
+                        <li><a class="dropdown-item" href="#">Site</a></li>
                         <li><a class="dropdown-item" href="#">Utilizadores</a></li>
                         <li><a class="dropdown-item" href="#">Serviços</a></li>
                         <li><a class="dropdown-item" href="#">Tratamentos</a></li>

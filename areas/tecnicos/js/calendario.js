@@ -1,7 +1,6 @@
-const currentDate = new Date(); // Data atual
-let currentView = 'daily'; // Vista inicial para ser diária
+const currentDate = new Date();
+let currentView = 'daily';
 
-// Função para formatar o mês e o ano
 function formatMonthYear(date) {
     const months = [
         "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
@@ -10,45 +9,41 @@ function formatMonthYear(date) {
     return `${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-// Atualizar o título do período (mês/ano ou semana)
 function updatePeriod() {
     document.getElementById('current-period').innerText = formatMonthYear(currentDate);
 }
 
-// Função para adicionar serviços agendados à célula
 function addScheduledServices(cell, date) {
     const formattedDate = date.toISOString().split('T')[0];
+    
+    // Filtra os serviços para o dia específico
     const servicesForDay = servicosAgendados.filter(service => 
-        service.data_agendada.split(' ')[0] === formattedDate
+        service.data_agendada === formattedDate
     );
 
+    // Adiciona cada serviço à célula do dia
     servicesForDay.forEach(service => {
         const serviceDiv = document.createElement('div');
         serviceDiv.className = 'scheduled-service';
         serviceDiv.innerHTML = `
-            <strong>Cliente: ${service.nome_cliente}</strong><br>
-            Estabelecimento: ${service.estabelecimento_contrato}<br>
-            Morada Estabelecimento: ${service.morada_contrato}<br>
-            Hora: ${service.hora_servico}<br>
-            Técnico: ${service.tecnico}<br>
-            Serviço: ${service.pragas_tratadas}<br>
-            <button onclick="gerarRelatorio(${service.id_agendamento})">Relatório</button>
+            <strong>${service.nome_cliente}</strong><br>
+            ${service.nome_estabelecimento}<br>
+            ${service.morada_estabelecimento}<br>
+            Hora: ${service.hora_servico}
         `;
-        serviceDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
         cell.appendChild(serviceDiv);
     });
 }
 
-// Gerar visualização diária
 function generateDailyCalendar() {
     const calendarBody = document.getElementById('calendar-body');
     const calendarHeaders = document.getElementById('calendar-headers');
-    calendarHeaders.style.display = 'none'; // Esconder os cabeçalhos da semana
-    calendarBody.innerHTML = ''; // Limpa o conteúdo anterior
+    calendarHeaders.style.display = 'none';
+    calendarBody.innerHTML = '';
 
     const row = document.createElement('tr');
     const cell = document.createElement('td');
-    cell.colSpan = 7; // Faz a célula ocupar toda a linha
+    cell.colSpan = 7;
     cell.innerHTML = `<div class="day-number">${currentDate.getDate()}</div>`;
     addScheduledServices(cell, currentDate);
     row.appendChild(cell);
@@ -57,12 +52,11 @@ function generateDailyCalendar() {
     updatePeriod();
 }
 
-// Gerar calendário semanal
 function generateWeeklyCalendar() {
     const calendarBody = document.getElementById('calendar-body');
     const calendarHeaders = document.getElementById('calendar-headers');
-    calendarHeaders.style.display = ''; // Mostrar cabeçalhos da semana
-    calendarBody.innerHTML = ''; // Limpa o conteúdo anterior
+    calendarHeaders.style.display = '';
+    calendarBody.innerHTML = '';
 
     const firstDayOfWeek = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()));
     let row = document.createElement('tr');
@@ -85,12 +79,11 @@ function generateWeeklyCalendar() {
     updatePeriod();
 }
 
-// Gerar calendário mensal
 function generateMonthlyCalendar() {
     const calendarBody = document.getElementById('calendar-body');
     const calendarHeaders = document.getElementById('calendar-headers');
-    calendarHeaders.style.display = ''; // Mostrar cabeçalhos da semana
-    calendarBody.innerHTML = ''; // Limpa o conteúdo anterior
+    calendarHeaders.style.display = '';
+    calendarBody.innerHTML = '';
 
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
     const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -99,7 +92,6 @@ function generateMonthlyCalendar() {
 
     let row = document.createElement('tr');
 
-    // Células em branco para dias antes do primeiro dia do mês
     for (let i = 0; i < startDay; i++) {
         const cell = document.createElement('td');
         row.appendChild(cell);
@@ -117,14 +109,12 @@ function generateMonthlyCalendar() {
         addScheduledServices(cell, date);
         row.appendChild(cell);
 
-        // Se for sábado, adicionar nova linha
         if (date.getDay() === 6) {
             calendarBody.appendChild(row);
             row = document.createElement('tr');
         }
     }
 
-    // Adicionar a última linha se necessário
     if (row.children.length > 0) {
         calendarBody.appendChild(row);
     }
@@ -132,7 +122,6 @@ function generateMonthlyCalendar() {
     updatePeriod();
 }
 
-// Mudança de vista
 function changeView(view) {
     currentView = view;
     if (view === 'daily') {
@@ -144,36 +133,31 @@ function changeView(view) {
     }
 }
 
-// Eventos de clique
 document.getElementById('prev-period').addEventListener('click', () => {
     if (currentView === 'daily') {
         currentDate.setDate(currentDate.getDate() - 1);
-        generateDailyCalendar();
     } else if (currentView === 'weekly') {
         currentDate.setDate(currentDate.getDate() - 7);
-        generateWeeklyCalendar();
     } else {
         currentDate.setMonth(currentDate.getMonth() - 1);
-        generateMonthlyCalendar();
     }
+    changeView(currentView);
 });
 
 document.getElementById('next-period').addEventListener('click', () => {
     if (currentView === 'daily') {
         currentDate.setDate(currentDate.getDate() + 1);
-        generateDailyCalendar();
     } else if (currentView === 'weekly') {
         currentDate.setDate(currentDate.getDate() + 7);
-        generateWeeklyCalendar();
     } else {
         currentDate.setMonth(currentDate.getMonth() + 1);
-        generateMonthlyCalendar();
     }
+    changeView(currentView);
 });
 
 document.getElementById('view-daily').addEventListener('click', () => changeView('daily'));
 document.getElementById('view-weekly').addEventListener('click', () => changeView('weekly'));
 document.getElementById('view-monthly').addEventListener('click', () => changeView('monthly'));
 
-// Gerar o calendário inicial na vista diária
-changeView('daily'); // Quando a página carrega, exibe a vista diária
+// Inicializar o calendário
+changeView('daily');

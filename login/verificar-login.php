@@ -21,16 +21,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
     // verificar se o email existe e se a palavra-passe é válida
-    $sql = "SELECT * FROM utilizadores WHERE email = '$email'";
-    $result = mysqli_query($conn, $sql);
-    $utilizador = mysqli_fetch_assoc($result);
+    $stmt = $conn->prepare("SELECT * FROM utilizadores WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $utilizador = $result->fetch_assoc();
+    
 
     // verificar se o utilizador existe e se a palavra-passe está correta
     if ($utilizador && password_verify($password, $utilizador['palavra_passe'])) {
         // Iniciar a sessão
         session_start();
-        $_SESSION['utilizador'] = $utilizador['email'];  // Armazenar o email na sessão
-        $_SESSION['cargo'] = $utilizador['cargo'];  // Armazenar o cargo na sessão
+        $_SESSION['id'] = $utilizador['id'];  // Adicione esta linha para armazenar o ID
+        $_SESSION['utilizador'] = $utilizador['email'];
+        $_SESSION['cargo'] = $utilizador['cargo'];
 
         // página correspondente ao cargo do utilizador
         if ($utilizador['cargo'] == 'cliente') {

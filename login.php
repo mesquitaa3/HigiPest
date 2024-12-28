@@ -24,7 +24,7 @@
             </div>
         <?php endif; ?>
 
-        <!-- Formulário de login -->
+        <!-- Form de login -->
         <form action="/web/login/verificar-login.php" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>

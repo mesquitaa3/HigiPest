@@ -19,9 +19,13 @@ if ($_SESSION['cargo'] != 'tecnico') {
     
 </head>
 <body>
+
+    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/tecnicos/menu.php'); ?>
+
+
     <div class="container mt-5">
         <p>técnico</p>
-        <a href="logout.php" class="btn btn-danger">Sair</a>
+        <a href="/web/login/logout.php" class="btn btn-danger">Sair</a>
     </div>
 </body>
 </html>
