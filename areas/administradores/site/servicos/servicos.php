@@ -9,7 +9,7 @@ if ($_SESSION['cargo'] != 'administrador') {
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
 // Consultar os serviços
-$query = "SELECT * FROM servicos";
+$query = "SELECT * FROM servicos WHERE visivel = 1";
 $result = $conn->query($query);
 ?>
 
@@ -35,7 +35,17 @@ $result = $conn->query($query);
         <!-- button criar serviço -->
         <div class="d-flex justify-content-between mb-4">
             <a href="criar_servicos.php" class="btn btn-primary">Criar Novo Serviço</a>
+            <a href="servicos_ocultos.php" class="btn btn-primary">Mostrar Serviços Ocultos</a>
         </div>
+
+        <!-- alerta de sucesso -->
+        <?php
+        if (isset($_SESSION['flash_message'])) {
+            $message = $_SESSION['flash_message'];
+            echo "<div class='alert alert-{$message['type']}' role='alert'>{$message['message']}</div>";
+            unset($_SESSION['flash_message']); //remove a mensagem da sessão ao dar refresh
+        }
+        ?>
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">

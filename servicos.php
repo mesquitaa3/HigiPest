@@ -37,19 +37,18 @@ $result = $conn->query($sql);
     <!-- Serviços -->
     <section id="tipos-pragas" class="py-5 bg-light">
     <div class="container">
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <?php
-            // Verificar se há pragas para exibir
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['servico']) . '" style="width: 100%; height: 200px; object-fit: cover;">
-                            <div class="card-body">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['servico']) . '" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">' . htmlspecialchars($row['servico']) . '</h5>
-                                <p class="card-text">' . htmlspecialchars($row['descricao']) . '</p>
-                                <a href="#" class="btn btn-primary">Soluções</a>
+                                <p class="card-text flex-grow-1">' . htmlspecialchars($row['descricao']) . '</p>
+                                <a href="#" class="btn btn-primary mt-auto">Soluções</a>
                             </div>
                         </div>
                     </div>
@@ -59,12 +58,11 @@ $result = $conn->query($sql);
                 echo '<p class="text-center">Nenhum serviço disponível no momento.</p>';
             }
 
-            // Fechar a conexão
             $conn->close();
             ?>
         </div>
     </div>
-</section>
+    </section>
 
 
     <!-- Footer -->

@@ -23,10 +23,10 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/areas/administradores/site/servicos.php">Serviços</a> <!-- tabela para adicionar, remover, editar serviços -->
+                    <a class="nav-link" href="/web/areas/administradores/site/servicos/servicos.php">Serviços</a> <!-- tabela para adicionar, remover, editar serviços -->
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/areas/administradores/editar_pragas.php">Pragas</a><!-- tabela para adicionar, remover, editar pragas -->
+                    <a class="nav-link" href="/web/areas/administradores/site/pragas/pragas.php">Pragas</a><!-- tabela para adicionar, remover, editar pragas -->
                     </li>
                 </li>
                 <li class="nav-item">

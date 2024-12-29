@@ -171,6 +171,17 @@ document.getElementById('next-period').addEventListener('click', () => {
     }
 });
 
+document.getElementById('today-button').addEventListener('click', () => {
+    currentDate.setTime(new Date().getTime()); // Reset para hoje
+    if (currentView === 'daily') {
+        generateDailyCalendar();
+    } else if (currentView === 'weekly') {
+        generateWeeklyCalendar();
+    } else {
+        generateMonthlyCalendar();
+    }
+});
+
 document.getElementById('view-daily').addEventListener('click', () => changeView('daily'));
 document.getElementById('view-weekly').addEventListener('click', () => changeView('weekly'));
 document.getElementById('view-monthly').addEventListener('click', () => changeView('monthly'));

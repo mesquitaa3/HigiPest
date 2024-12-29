@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $observacoes_contrato = $_POST['observacoes_contrato'];
     $tipo_contrato = $_POST['tipo_contrato'];
     $valor_contrato = isset($_POST['valor_contrato']) ? $_POST['valor_contrato'] : null;
+    $dia_descanso = isset($_POST['dia_descanso']) ? implode(", ", $_POST['dia_descanso']) : "";
 
     // Validações simples
     if (empty($id_cliente) || empty($morada_contrato) || empty($estabelecimento_contrato) || empty($data_inicio_contrato) || empty($tipo_contrato)) {
@@ -36,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Preparar a consulta para evitar SQL Injection
         $insert_query = $conn->prepare("INSERT INTO contratos 
-            (id_cliente, estabelecimento_contrato, morada_contrato, pragas_contrato, meses_contrato, data_inicio_contrato, observacoes_contrato, tipo_contrato, valor_contrato, visivel) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
+            (id_cliente, estabelecimento_contrato, morada_contrato, pragas_contrato, meses_contrato, data_inicio_contrato, observacoes_contrato, tipo_contrato, dia_descanso, valor_contrato, visivel) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
 
         // Bind dos parâmetros
-        $insert_query->bind_param("isssssssd", $id_cliente, $estabelecimento_contrato, $morada_contrato, $pragas_contrato, $meses_contrato, $data_inicio_contrato, $observacoes_contrato, $tipo_contrato, $valor_contrato);
+        $insert_query->bind_param("issssssssd", $id_cliente, $estabelecimento_contrato, $morada_contrato, $pragas_contrato, $meses_contrato, $data_inicio_contrato, $observacoes_contrato, $tipo_contrato, $dia_descanso, $valor_contrato);
 
         // Executar a consulta
         if ($insert_query->execute()) {
@@ -138,6 +139,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-group mb-3">
             <label for="observacoes_contrato">Observações:</label>
             <textarea id="observacoes_contrato" name="observacoes_contrato" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Dia de descanso:</label>
+            <?php
+            $dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+            foreach ($dias as $dia):
+            ?>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="dia_<?php echo strtolower($dia); ?>" name="dia_descanso[]" value="<?php echo $dia; ?>">
+                    <label class="form-check-label" for="dia_<?php echo strtolower($dia); ?>"><?php echo $dia; ?></label>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <div class="form-group mb-3">

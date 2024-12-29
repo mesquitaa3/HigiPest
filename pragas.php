@@ -21,7 +21,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="/web/assets/styles/styles.css">
     
 </head>
-<body>
+<body class="d-flex flex-column" style="min-height: 100vh;">
 
     <!-- Menu -->
     <?php require('components/menu.php'); ?> <!-- Inclui o menu -->
@@ -46,19 +46,19 @@ $result = $conn->query($sql);
     <!-- Serviços -->
     <section id="tipos-pragas" class="py-5 bg-light">
     <div class="container">
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             <?php
             // Verificar se há pragas para exibir
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['praga']) . '" style="width: 100%; height: 200px; object-fit: cover;">
-                            <div class="card-body">
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['praga']) . '" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">' . htmlspecialchars($row['praga']) . '</h5>
-                                <p class="card-text">' . htmlspecialchars($row['descricao']) . '</p>
-                                <a href="#" class="btn btn-primary">Soluções</a>
+                                <p class="card-text flex-grow-1">' . htmlspecialchars($row['descricao']) . '</p>
+                                <a href="#" class="btn btn-primary mt-auto">Soluções</a>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,8 @@ $result = $conn->query($sql);
             ?>
         </div>
     </div>
-</section>
+    </section>
+
 
     <!-- Footer -->
     <?php require('components/footer.php'); ?> <!-- Inclui o footer aqui -->

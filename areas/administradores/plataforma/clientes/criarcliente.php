@@ -16,47 +16,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $morada = $_POST['morada'];
     $codigo_postal = $_POST['codigo_postal'];
     $zona = $_POST['zona'];
+    $nif = $_POST['nif'];
 
     // A palavra-passe será igual ao telemóvel
     $palavra_passe = $telemovel;
     $hashed_password = password_hash($palavra_passe, PASSWORD_BCRYPT); // Encriptação segura
 
     // Verificar se todos os campos estão preenchidos
-    if (empty($nome) || empty($email) || empty($telemovel) || empty($morada) || empty($codigo_postal) || empty($zona)) {
+    if (empty($nome) || empty($email) || empty($telemovel) || empty($morada) || empty($codigo_postal) || empty($zona) || empty($nif)) {
         $error_message = "Por favor, preencha todos os campos!";
     } else {
-        // Guardar os dados na tabela cliente, visivel = 1 para o cliente estar ativo
-        $query_cliente = "INSERT INTO clientes (nome_cliente, email_cliente, telemovel_cliente, morada_cliente, codigopostal_cliente, zona_cliente, visivel)
-                          VALUES (?, ?, ?, ?, ?, ?, 1)";
+        // Verificar se o email já existe
+        $check_email_query = "SELECT * FROM utilizadores WHERE email = ?";
+        $stmt_check_email = $conn->prepare($check_email_query);
+        $stmt_check_email->bind_param("s", $email);
+        $stmt_check_email->execute();
+        $result_check_email = $stmt_check_email->get_result();
 
-        // Preparar e executar a consulta para inserir dados na tabela cliente
-        $stmt_cliente = $conn->prepare($query_cliente);
-        $stmt_cliente->bind_param("ssssss", $nome, $email, $telemovel, $morada, $codigo_postal, $zona);
-
-        if ($stmt_cliente->execute()) {
-            // Obter o id_cliente gerado automaticamente (auto_increment)
-            $id_cliente = $stmt_cliente->insert_id;
-
-            // Inserir dados na tabela utilizadores
-            // Não vamos usar o campo `id_cliente`, pois a tabela utilizadores não possui esse campo
-            $query_utilizador = "INSERT INTO utilizadores (nome, email, palavra_passe, cargo)
-                                 VALUES (?, ?, ?, 'cliente')";
-
-            // Preparar e executar a consulta para inserir dados na tabela utilizadores
-            $stmt_utilizador = $conn->prepare($query_utilizador);
-            $stmt_utilizador->bind_param("sss", $nome, $email, $hashed_password);
-
-            if ($stmt_utilizador->execute()) {
-                // Redirecionar para a página tabelaclientes.php com mensagem de sucesso
-                header("Location: tabelaclientes.php?msg=cliente_adicionado");
-                exit();
-            } else {
-                // Caso haja erro ao inserir na tabela utilizadores
-                $error_message = "Erro ao adicionar utilizador na tabela de utilizadores.";
-            }
+        if ($result_check_email->num_rows > 0) {
+            $error_message = "Este email já está a ser utilizado. Por favor, use outro email.";
         } else {
-            // Caso haja erro ao inserir na tabela clientes
-            $error_message = "Erro ao adicionar cliente na tabela de clientes.";
+            // Guardar os dados na tabela cliente, visivel = 1 para o cliente estar ativo
+            $query_cliente = "INSERT INTO clientes (nome_cliente, email_cliente, telemovel_cliente, morada_cliente, codigopostal_cliente, zona_cliente, nif_cliente, visivel)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+
+            // Preparar e executar a consulta para inserir dados na tabela cliente
+            $stmt_cliente = $conn->prepare($query_cliente);
+            $stmt_cliente->bind_param("sssssss", $nome, $email, $telemovel, $morada, $codigo_postal, $zona, $nif);
+
+            if ($stmt_cliente->execute()) {
+                // Obter o id_cliente gerado automaticamente (auto_increment)
+                $id_cliente = $stmt_cliente->insert_id;
+
+                // Inserir dados na tabela utilizadores
+                $query_utilizador = "INSERT INTO utilizadores (nome, email, palavra_passe, cargo)
+                                     VALUES (?, ?, ?, 'cliente')";
+
+                // Preparar e executar a consulta para inserir dados na tabela utilizadores
+                $stmt_utilizador = $conn->prepare($query_utilizador);
+                $stmt_utilizador->bind_param("sss", $nome, $email, $hashed_password);
+
+                if ($stmt_utilizador->execute()) {
+                    // Redirecionar para a página tabelaclientes.php com mensagem de sucesso
+                    header("Location: tabelaclientes.php?msg=cliente_adicionado");
+                    exit();
+                } else {
+                    // Caso haja erro ao inserir na tabela utilizadores
+                    $error_message = "Erro ao adicionar cliente";
+                }
+            } else {
+                // Caso haja erro ao inserir na tabela clientes
+                $error_message = "Erro ao adicionar cliente";
+            }
         }
     }
 }
@@ -102,6 +113,10 @@ $conn->close();
             <div class="form-group mb-3">
                 <label for="telemovel">Telemóvel:</label>
                 <input type="text" id="telemovel" name="telemovel" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="nif">NIF:</label>
+                <input type="text" id="nif" name="nif" class="form-control" required>
             </div>
             <div class="form-group mb-3">
                 <label for="morada">Morada:</label>

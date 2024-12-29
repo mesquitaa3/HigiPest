@@ -76,6 +76,7 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
 
         <!-- Botões de alternância de visualização -->
         <div class="d-flex justify-content-center mb-4">
+            <button id="today-button" class="btn btn-success me-2">Hoje</button>
             <button id="view-daily" class="btn btn-outline-secondary me-2">Diário</button>
             <button id="view-weekly" class="btn btn-outline-secondary me-2">Semanal</button>
             <button id="view-monthly" class="btn btn-outline-secondary">Mensal</button>

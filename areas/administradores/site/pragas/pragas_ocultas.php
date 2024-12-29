@@ -1,15 +1,14 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  //se não for administrador, volta para o login
+    header("Location: /web/login.php");
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Consultar os serviços
-$query = "SELECT * FROM pragas WHERE visivel = 1";
+// Consultar apenas as pragas ocultas
+$query = "SELECT * FROM pragas WHERE visivel = 0";
 $result = $conn->query($query);
 ?>
 
@@ -18,35 +17,26 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serviços</title>
+    <title>Pragas Ocultas</title>
 
-    <!-- Bootstrap e CSS -->
     <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
     <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/web/assets/styles/styles.css">
 </head>
 <body>
 
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/site/menu.php'); ?> <!-- Inclui menu - menu.php -->
+    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/site/menu.php'); ?>
 
     <div class="container mt-5">
-        <h2 class="text-center mb-5">Pragas</h2>
+        <h2 class="text-center mb-5">Pragas Ocultas</h2>
 
-        <!-- button criar serviço e mostrar pragas ocultas -->
-        <div class="d-flex justify-content-between mb-4">
-            <a href="criar_pragas.php" class="btn btn-primary">Criar Nova Praga</a>
-            <a href="pragas_ocultas.php" class="btn btn-primary">Pragas Ocultas</a>
-        </div>
-
-        <!-- alerta de sucesso -->
         <?php
         if (isset($_SESSION['flash_message'])) {
             $message = $_SESSION['flash_message'];
             echo "<div class='alert alert-{$message['type']}' role='alert'>{$message['message']}</div>";
-            unset($_SESSION['flash_message']); //remove a mensagem da sessão ao dar refresh
+            unset($_SESSION['flash_message']);
         }
         ?>
-
 
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
@@ -61,11 +51,8 @@ $result = $conn->query($query);
                 </thead>
                 <tbody>
                     <?php
-                    // Verificar se há pragas para exibir
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            $status_botao = ($row['visivel'] == 1) ? "Ocultar" : "Mostrar";
-                            $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success";
                             echo '
                             <tr>
                                 <td>' . htmlspecialchars($row['id_praga']) . '</td>
@@ -74,24 +61,22 @@ $result = $conn->query($query);
                                 <td><img src="' . htmlspecialchars($row['img']) . '" alt="' . htmlspecialchars($row['praga']) . '" style="width: 100px; height: 60px; object-fit: cover;"></td>
                                 <td>
                                     <a href="editar_praga.php?id_praga=' . $row['id_praga'] . '" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="ocultar_praga.php?id=' . $row['id_praga'] . '" class="btn ' . $cor_botao . ' btn-sm">' . $status_botao . '</a>
+                                    <a href="ocultar_praga.php?id=' . $row['id_praga'] . '" class="btn btn-success btn-sm">Mostrar</a>
                                 </td>
                             </tr>
                             ';
                         }
                     } else {
-                        echo '<tr><td colspan="5" class="text-center">Nenhum serviço disponível no momento.</td></tr>';
+                        echo '<tr><td colspan="5" class="text-center">Nenhuma praga oculta no momento.</td></tr>';
                     }
 
-                    // Fechar a conexão
                     $conn->close();
                     ?>
                 </tbody>
             </table>
         </div>
-        <!-- Button voltar para index-site -->
         <div class="d-flex justify-content-between mb-4">
-            <a href="/web/areas/administradores/site/index.php" class="btn btn-primary">Voltar</a>
+            <a href="pragas.php" class="btn btn-primary">Voltar para Pragas Visíveis</a>
         </div>
     </div>
 
