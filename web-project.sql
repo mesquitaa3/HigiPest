@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29-Dez-2024 às 12:30
+-- Tempo de geração: 29-Dez-2024 às 16:03
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -164,6 +164,18 @@ CREATE TABLE `pragas` (
   `visivel` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Extraindo dados da tabela `pragas`
+--
+
+INSERT INTO `pragas` (`id_praga`, `praga`, `descricao`, `img`, `ordem`, `visivel`) VALUES
+(5, 'Roedores', 'Os ratos e ratazanas são roedores com mais de três mil espécies, sendo essencial identificá-los para um controlo eficaz. As três espécies mais comuns em pragas são a Ratazana Comum (Rattus norvegicus), o Rato Negro (Rattus rattus) e o Rato Doméstico (Mus ', '/web/uploads/roedores.jpg', 1, 1),
+(6, 'Baratas', 'As baratas são insetos nocivos à saúde humana, conhecidos por propagar diversas doenças. Em Portugal, existem três espécies principais:\r\nBarata Alemã: Castanha, com 12-15 mm de comprimento.\r\nBarata Oriental: Preta, com 20-30 mm de comprimento.\r\nBarata Ame', '/web/uploads/baratas.jpg', 2, 1),
+(7, 'Formigas', 'As formigas podem tornar-se num incómodo, em particular quando entram na sua casa. O problema é que não sabemos por onde andaram para se alimentar, e como tal, não as queremos a passear nos nossos armários onde temos os nossos alimentos guardados. As form', '/web/uploads/formigas.jpg', 3, 1),
+(8, 'Moscas', 'Os insetos voadores podem ser bastante irritantes e representam riscos à saúde devido às doenças que podem transmitir. Para controlar infestações, é possível adotar medidas simples e sem custos, como:\r\nManter portas e janelas fechadas.\r\nArmazenar alimento', '/web/uploads/moscas.jpg', 4, 1),
+(9, 'Aves', 'As aves podem ser uma praga significativa, causando diversos problemas:\r\nDanos à propriedade: Estragam telhas, bloqueiam caleiras e corroem materiais com seus dejetos.\r\nAgressividade: Podem atacar pessoas, especialmente durante a época de reprodução.\r\nTra', '/web/uploads/aves.jpg', 5, 1),
+(10, 'Térmitas', 'As térmitas são insetos que se alimentam de madeira e materiais celulósicos, representando uma séria ameaça para estruturas de edifícios. Existem duas espécies principais associadas a danos em construções:\r\nTérmitas da madeira húmida:\r\nPreferem madeira em', '/web/uploads/termitas.png', 6, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -178,6 +190,16 @@ CREATE TABLE `servicos` (
   `ordem` int(11) NOT NULL,
   `visivel` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `servicos`
+--
+
+INSERT INTO `servicos` (`id_servico`, `servico`, `descricao`, `img`, `ordem`, `visivel`) VALUES
+(10, 'Desinfestação', 'O objetivo é a eliminação de agentes patogénicos. \r\nOs nossos tratamentos de desinfestação estão desenhados de forma específica para cada tipo de Praga. \r\nPor isso, podemos oferecer uma máxima eficácia e garantia de um serviço profissional.', '/web/uploads/desinfestacao.jpg', 1, 1),
+(11, 'Desratização', 'A desratização ou controlo de roedores é o processo que consiste em eliminar ratos e ratazanas e que implica um conhecimento profundo do seu habitat, comportamento e biologia, para um efetivo controlo da Praga.', '/web/uploads/desratizacao.jpg', 2, 1),
+(12, 'Desbaratização', 'A desbaratização é um termo frequentemente utilizado para nos referirmos a tratamentos para o controlo de Baratas.', '/web/uploads/desbaratizacao.jpg', 3, 1),
+(13, 'Tratamento de Madeiras', 'Os insetos que infestam a madeira são muito perigosas e os danos são muito difíceis de detetar, antes de o dano ser já muito elevado/visível.', '/web/uploads/tratamentomadeiras.jpg', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -330,13 +352,13 @@ ALTER TABLE `equipa`
 -- AUTO_INCREMENT de tabela `pragas`
 --
 ALTER TABLE `pragas`
-  MODIFY `id_praga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_praga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `servicos`
 --
 ALTER TABLE `servicos`
-  MODIFY `id_servico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_servico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `tecnicos`
