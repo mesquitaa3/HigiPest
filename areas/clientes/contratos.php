@@ -1,71 +1,43 @@
 <?php
 session_start();
-if ($_SESSION['cargo'] != 'administrador') {
+if ($_SESSION['cargo'] != 'cliente') {
     header("Location: /web/login.php");
     exit();
 }
 
 include($_SERVER['DOCUMENT_ROOT'] . "/web/bd/config.php");
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $telemovel = $_POST['telemovel'];
-    $morada = $_POST['morada'];
-    $codigo_postal = $_POST['codigo_postal'];
-    $zona = $_POST['zona'];
-    $nif = $_POST['nif'];
+$email = $_SESSION['email']; // Email do cliente logado
 
-    $palavra_passe = $telemovel;
-    $hashed_password = password_hash($palavra_passe, PASSWORD_BCRYPT);
+// Buscar informações do cliente pelo email
+$query_cliente = "SELECT id_cliente FROM clientes WHERE email_cliente = ?";
+$stmt_cliente = $conn->prepare($query_cliente);
+$stmt_cliente->bind_param("s", $email);
+$stmt_cliente->execute();
+$result_cliente = $stmt_cliente->get_result();
 
-    if (empty($nome) || empty($email) || empty($telemovel) || empty($morada) || empty($codigo_postal) || empty($zona) || empty($nif)) {
-        $error_message = "Por favor, preencha todos os campos!";
-    } else {
-        // Verificar se o email já existe em ambas as tabelas
-        $check_email_query = "SELECT * FROM utilizadores WHERE email = ? UNION SELECT * FROM clientes WHERE email_cliente = ?";
-        $stmt_check_email = $conn->prepare($check_email_query);
-        $stmt_check_email->bind_param("ss", $email, $email);
-        $stmt_check_email->execute();
-        $result_check_email = $stmt_check_email->get_result();
-
-        if ($result_check_email->num_rows > 0) {
-            $error_message = "Este email já está em uso. Por favor, use outro email.";
-        } else {
-            // Iniciar transação
-            $conn->begin_transaction();
-
-            try {
-                // Inserir na tabela clientes
-                $query_cliente = "INSERT INTO clientes (nome_cliente, email_cliente, telemovel_cliente, morada_cliente, codigopostal_cliente, zona_cliente, nif_cliente, visivel)
-                                  VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
-                $stmt_cliente = $conn->prepare($query_cliente);
-                $stmt_cliente->bind_param("sssssss", $nome, $email, $telemovel, $morada, $codigo_postal, $zona, $nif);
-                $stmt_cliente->execute();
-
-                // Inserir na tabela utilizadores
-                $query_utilizador = "INSERT INTO utilizadores (nome, email, palavra_passe, cargo)
-                                     VALUES (?, ?, ?, 'cliente')";
-                $stmt_utilizador = $conn->prepare($query_utilizador);
-                $stmt_utilizador->bind_param("sss", $nome, $email, $hashed_password);
-                $stmt_utilizador->execute();
-
-                // Commit da transação
-                $conn->commit();
-
-                header("Location: tabelaclientes.php?msg=cliente_adicionado");
-                exit();
-            } catch (Exception $e) {
-                // Rollback em caso de erro
-                $conn->rollback();
-                $error_message = "Erro ao adicionar cliente: " . $e->getMessage();
-            }
-        }
-    }
+if ($result_cliente->num_rows === 0) {
+    $error_message = "Cliente não encontrado.";
+    $conn->close();
+    exit();
 }
+
+$cliente = $result_cliente->fetch_assoc();
+$id_cliente = $cliente['id_cliente'];
+
+// Buscar contratos associados ao cliente
+$query_contratos = "SELECT id_contrato, estabelecimento_contrato, morada_contrato, pragas_contrato, 
+                           data_inicio_contrato, tipo_contrato, valor_contrato 
+                    FROM contratos 
+                    WHERE id_cliente = ?";
+$stmt_contratos = $conn->prepare($query_contratos);
+$stmt_contratos->bind_param("i", $id_cliente);
+$stmt_contratos->execute();
+$result_contratos = $stmt_contratos->get_result();
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -89,29 +61,29 @@ $conn->close();
     <div class="container mt-5">
         <h1 class="text-center mb-4">Meus Contratos</h1>
         
-        <?php if ($result->num_rows > 0): ?>
+        <?php if ($result_contratos->num_rows > 0): ?>
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
-                        <th>#</th>
                         <th>Estabelecimento</th>
                         <th>Morada</th>
                         <th>Pragas</th>
                         <th>Data Início</th>
                         <th>Tipo</th>
                         <th>Valor (€)</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php while ($row = $result_contratos->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['id_contrato']); ?></td>
                             <td><?php echo htmlspecialchars($row['estabelecimento_contrato']); ?></td>
                             <td><?php echo htmlspecialchars($row['morada_contrato']); ?></td>
                             <td><?php echo htmlspecialchars($row['pragas_contrato']); ?></td>
                             <td><?php echo htmlspecialchars($row['data_inicio_contrato']); ?></td>
                             <td><?php echo htmlspecialchars($row['tipo_contrato']); ?></td>
                             <td><?php echo htmlspecialchars(number_format($row['valor_contrato'], 2)); ?></td>
+                            <td>botoes</td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

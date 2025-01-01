@@ -2,17 +2,19 @@
 session_start();
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
+// Verifica se o utilizador está autenticado e se é um cliente
 if (!isset($_SESSION['id']) || $_SESSION['cargo'] !== 'cliente') {
     header("Location: /web/login.php");
     exit();
 }
 
-//guardar os dados do utilizador
+// Guardar os dados do utilizador
 $id_utilizador = $_SESSION['id'];
-$nome = $_SESSION['nome'];  //nome do utilizador
-$email = $_SESSION['email'];  //email do utilizador
+$nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';  // Nome do utilizador
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';  // Email do utilizador
 
-//envio do form de contacto
+
+// Envio do formulário de contato
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensagem = trim($_POST['mensagem']);
 
@@ -25,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("isss", $id_utilizador, $nome, $email, $mensagem);
 
         if ($stmt->execute()) {
-            $sucesso = "Mensagem enviada com sucesso!";
+            // Mensagem enviada com sucesso
+            $_SESSION['success'] = "Mensagem enviada com sucesso!";
+            // Redirecionar para evitar reenvio
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
         } else {
             $erro = "Ocorreu um erro ao enviar a mensagem. Tente novamente.";
         }
@@ -46,8 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Bootstrap e CSS -->
     <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
     <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
-
 </head>
 <body class="bg-light">
 
@@ -55,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/web/areas/clientes/index.php">Área de Cliente</a>
-            <form class="d-flex" action="/web/logout.php" method="POST">
+            <form class="d-flex" action="/web/login.php" method="POST">
                 <button class="btn btn-outline-light" type="submit">Logout</button>
             </form>
         </div>
@@ -64,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container py-5">
         <h2 class="text-center mb-4">Contacte-nos</h2>
         <div class="row">
-            <!-- Informações  --> <!-- atualizar de acordo com tabela "contactos" -->
+            <!-- Informações da Empresa -->
             <div class="col-md-6">
                 <h4>Informações da Empresa</h4>
                 <p><strong>Morada:</strong> Rua Exemplo, 123, Lisboa</p> 
@@ -73,25 +77,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p><strong>Horário:</strong> Segunda a Sexta, das 9h às 18h</p>
             </div>
 
-            <!-- fomrm de contacto -->
+            <!-- Formulário de contato -->
             <div class="col-md-6">
                 <h4>Envie-nos uma mensagem</h4>
-                <?php if (isset($sucesso)): ?>
-                    <div class="alert alert-success"><?php echo htmlspecialchars($sucesso); ?></div>
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success"><?php echo htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?></div>
                 <?php elseif (isset($erro)): ?>
                     <div class="alert alert-danger"><?php echo htmlspecialchars($erro); ?></div>
                 <?php endif; ?>
                 <form method="POST">
                     <div class="mb-3">
                         <label for="mensagem" class="form-label">Mensagem</label>
-                        <textarea name="mensagem" id="mensagem" rows="5" class="form-control" placeholder="Escreva a mensagem aqui..."></textarea>
+                        <textarea name="mensagem" id="mensagem" rows="5" class="form-control" placeholder="Escreva a mensagem aqui..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="submit" class="btn btn-success">Enviar</button>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- Scripts Bootstrap -->
     <script src="/web/assets/scripts/bootstrap.bundle.min.js"></script>
 </body>
 </html>

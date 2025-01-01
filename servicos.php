@@ -48,7 +48,7 @@ $result = $conn->query($sql);
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">' . htmlspecialchars($row['servico']) . '</h5>
                                 <p class="card-text flex-grow-1">' . htmlspecialchars($row['descricao']) . '</p>
-                                <a href="#" class="btn btn-primary mt-auto">Soluções</a>
+                                <a href="#" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Soluções</a>
                             </div>
                         </div>
                     </div>

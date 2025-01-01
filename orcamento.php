@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">Enviar Pedido</button>
+            <button type="submit" class="btn btn-success fw-bold">Enviar Pedido de Orçamento</button>
         </div>
         
     </form>

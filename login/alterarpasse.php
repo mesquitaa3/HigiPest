@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// conexao com bd
+// Conexão com a base de dados
 $servername = "localhost";
 $username = "web";
 $password = "web";
@@ -11,7 +11,7 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (isset($_GET['token'])) {
     $token = mysqli_real_escape_string($conn, $_GET['token']);
 
-    //verificar se o token é valido 
+    // Verificar se o token é válido 
     $sql = "SELECT * FROM utilizadores WHERE reset_token = '$token' AND token_expiry > NOW()";
     $result = mysqli_query($conn, $sql);
 
@@ -19,22 +19,22 @@ if (isset($_GET['token'])) {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nova_password = password_hash($_POST['nova_password'], PASSWORD_BCRYPT);
 
-            //atualizar a palavra-passe na bd
+            // Atualizar a palavra-passe na base de dados
             $sql_update = "UPDATE utilizadores SET palavra_passe = '$nova_password', reset_token = NULL, token_expiry = NULL WHERE reset_token = '$token'";
             if (mysqli_query($conn, $sql_update)) {
-                echo "Palavra-passe alterada com sucesso. Já pode fazer login com a nova palavra-passe.";
+                echo "<div class='alert alert-success'>Palavra-passe alterada com sucesso. Já pode fazer login com a nova palavra-passe.</div>";
                 header("Location: /web/login.php");
                 exit();
             } else {
-                echo "Erro ao atualizar a palavra-passe.";
+                echo "<div class='alert alert-danger'>Erro ao atualizar a palavra-passe.</div>";
             }
         }
     } else {
-        echo "O Token é inválido ou está expirado.";
+        echo "<div class='alert alert-danger'>O Token é inválido ou está expirado.</div>";
         exit();
     }
 } else {
-    echo "Token não fornecido.";
+    echo "<div class='alert alert-danger'>Token não fornecido.</div>";
     exit();
 }
 ?>
@@ -45,13 +45,37 @@ if (isset($_GET['token'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repor Palavra-Passe</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
 </head>
-<body>
-    <h2>Repor Palavra-Passe</h2>
-    <form method="POST">
-        <label for="nova_password">Nova Palavra-Passe:</label>
-        <input type="password" id="nova_password" name="nova_password" required>
-        <button type="submit">Redefinir</button>
-    </form>
+<body class="d-flex flex-column" style="min-height: 100vh; background-color: #f8f9fa;">
+
+    <div class="container d-flex align-items-center justify-content-center" style="flex: 1;">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Repor Palavra-Passe</h2>
+
+                        <!-- Formulário de redefinição -->
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="nova_password" class="form-label">Nova Palavra-Passe</label>
+                                <input type="password" id="nova_password" name="nova_password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Redefinir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

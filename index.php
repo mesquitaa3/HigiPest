@@ -35,7 +35,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Pedir Orçamento</h5>
                             <p class="card-text">Peça o seu orçamento para o controlo de pragas na sua propriedade ou empresa.</p>
-                            <a href="orcamento.php" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Pedir</a>
+                            <a href="orcamento.php" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Pedir Orçamento</a>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Pragas</h5>
                             <p class="card-text">Saiba mais sobre as principais pragas que afetam residências e empresas, e como combatê-las.</p>
-                            <a href="pragas.php" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Ver Mais</a>
+                            <a href="pragas.php" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Ver Pragas</a>
                         </div>
                     </div>
                 </div>

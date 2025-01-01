@@ -1,42 +1,29 @@
 <?php
-// Conexão com a bd
-$servername = "localhost";
-$username = "web";
-$password = "web";
-$dbname = "web-project";
-
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-if (!$conn) {
-    die("Conexão falhou: " . mysqli_connect_error());
-}
-
-// Definir charset para UTF-8
-mysqli_set_charset($conn, "utf8");
+session_start();
+include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
 // Verificação do Login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //dados do form
+    // Dados do formulário
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // verificar se o email existe e se a palavra-passe é válida
+    // Verificar se o email existe
     $stmt = $conn->prepare("SELECT * FROM utilizadores WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
     $utilizador = $result->fetch_assoc();
-    
 
-    // verificar se o utilizador existe e se a palavra-passe está correta
+    // Verificar se o utilizador existe e se a palavra-passe está correta
     if ($utilizador && password_verify($password, $utilizador['palavra_passe'])) {
         // Iniciar a sessão
-        session_start();
-        $_SESSION['id'] = $utilizador['id'];  // Adicione esta linha para armazenar o ID
-        $_SESSION['utilizador'] = $utilizador['email'];
-        $_SESSION['cargo'] = $utilizador['cargo'];
+        $_SESSION['id'] = $utilizador['id'];  // Armazenar o ID do utilizador
+        $_SESSION['nome'] = $utilizador['nome'];  // Armazenar o nome do utilizador
+        $_SESSION['email'] = $utilizador['email'];  // Armazenar o email do utilizador
+        $_SESSION['cargo'] = $utilizador['cargo'];  // Armazenar o cargo do utilizador
 
-        // página correspondente ao cargo do utilizador
+        // Redirecionar para a página correspondente ao cargo do utilizador
         if ($utilizador['cargo'] == 'cliente') {
             header("Location: /web/areas/clientes/index.php");
         } elseif ($utilizador['cargo'] == 'administrador') {
@@ -44,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif ($utilizador['cargo'] == 'tecnico') {
             header("Location: /web/areas/tecnicos/index.php");
         }
-        exit();
+        exit(); // Certifique-se de usar exit() após header()
     } else {
         // Redirecionar de volta para a página de login com mensagem de erro
         header("Location: /web/login.php?erro=1");
