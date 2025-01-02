@@ -26,19 +26,19 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Atualiza os dados do cliente
+//atualizar dados do cliente
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $novo_nome = trim($_POST['nome']);
     $novo_email = trim($_POST['email']);
     $nova_password = trim($_POST['password']);
 
-    // Atualiza o nome e o email
+    //atualiza o nome e o email
     $update_sql = "UPDATE utilizadores SET nome = ?, email = ? WHERE id = ?";
     $update_stmt = $conn->prepare($update_sql);
     $update_stmt->bind_param("ssi", $novo_nome, $novo_email, $id_cliente);
     $update_stmt->execute();
 
-    // Atualiza a pass se for altrada
+    //atualiza a pass se for altrada
     if (!empty($nova_password)) {
         $hashed_password = password_hash($nova_password, PASSWORD_DEFAULT);
         $password_sql = "UPDATE utilizadores SET palavra_passe = ? WHERE id = ?";
@@ -77,7 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
 
-    <!-- Container principal -->
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-6">

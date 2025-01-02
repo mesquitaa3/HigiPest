@@ -2,19 +2,19 @@
 session_start();
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Verifica se o utilizador está autenticado e se é um cliente
+//verificar se quem está logado é um cliente
 if (!isset($_SESSION['id']) || $_SESSION['cargo'] !== 'cliente') {
     header("Location: /web/login.php");
     exit();
 }
 
-// Guardar os dados do utilizador
+//guardar dados do utilizador
 $id_utilizador = $_SESSION['id'];
-$nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';  // Nome do utilizador
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';  // Email do utilizador
+$nome = isset($_SESSION['nome']) ? $_SESSION['nome'] : '';  //nome do utilizador
+$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';  //email do utilizador
 
 
-// Envio do formulário de contato
+//enviar form de contacto
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensagem = trim($_POST['mensagem']);
 
@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("isss", $id_utilizador, $nome, $email, $mensagem);
 
         if ($stmt->execute()) {
-            // Mensagem enviada com sucesso
+            //mensagem enviada com sucesso
             $_SESSION['success'] = "Mensagem enviada com sucesso!";
-            // Redirecionar para evitar reenvio
+            //redirecionar para evitar reenvio
             header("Location: " . $_SERVER['PHP_SELF']);
             exit();
         } else {

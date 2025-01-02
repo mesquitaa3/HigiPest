@@ -5,20 +5,20 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir o arquivo de configuração para conectar ao banco
+//conect para bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Verificar se o id_contrato foi passado pela URL
+//verificar se o id do contrato passou atraves da url
 if (isset($_GET['id_contrato'])) {
     $id_contrato = $_GET['id_contrato'];
 
-    // Adicionar depuração para verificar se o id_contrato é válido
+    //verificar se o id é valido
     if (!is_numeric($id_contrato)) {
         echo "ID do contrato inválido!";
         exit;
     }
 
-    // Consultar dados do contrato com o cliente
+    //consultar dados do contrato com o cliente
     $query = "
         SELECT contratos.*, clientes.nome_cliente, clientes.morada_cliente, clientes.email_cliente, clientes.telemovel_cliente 
         FROM contratos
@@ -27,12 +27,12 @@ if (isset($_GET['id_contrato'])) {
     ";
     $result = $conn->query($query);
 
-    // Verificar se o contrato foi encontrado
+    //verificar se o contrato foi encontrado
     if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc(); // Definir a variável $row com os dados do contrato
-        $pragas = explode(',', $row['pragas_contrato']); // Separar as pragas em um array
+        $row = $result->fetch_assoc();
+        $pragas = explode(',', $row['pragas_contrato']);
     } else {
-        echo "Contrato não encontrado para o id_contrato: " . $id_contrato; // Exibir erro com o ID do contrato
+        echo "Contrato não encontrado para o id_contrato: " . $id_contrato; //exibir erro com o id do contrato caso nao seja encontrado
         exit;
     }
 } else {
@@ -40,26 +40,25 @@ if (isset($_GET['id_contrato'])) {
     exit;
 }
 
-// Consulta para buscar técnicos
-$query_tecnicos = "SELECT id, nome FROM utilizadores WHERE cargo = 'tecnico'";
+//select para mostrar os tecnicos
+$query_tecnicos = "SELECT id_tecnico, nome_tecnico FROM tecnicos";
 $result_tecnicos = $conn->query($query_tecnicos);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Captura os dados do formulário
+    //guardar dados
     $data_agendada = $_POST['data_agendada'];
     $hora_servico = $_POST['hora_servico'];
     $observacoes = $_POST['observacoes'];
-    $tecnico = $_POST['tecnico'];
+    $id_tecnico = $_POST['tecnico'];
     $pragas_selecionadas = isset($_POST['pragas']) ? implode(', ', $_POST['pragas']) : '';
 
-    // Inserir no banco de dados
+    //inserir os dados na tabela agendamentos
     $insert_query = "
         INSERT INTO agendamentos (id_contrato, data_agendada, hora_servico, observacoes, tecnico, pragas_tratadas)
-        VALUES (?, ?, ?, ?, ?, ?)
-    ";
+        VALUES (?, ?, ?, ?, ?, ?)";
     
     $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("isssss", $id_contrato, $data_agendada, $hora_servico, $observacoes, $tecnico, $pragas_selecionadas);
+    $stmt->bind_param("isssss", $id_contrato, $data_agendada, $hora_servico, $observacoes, $id_tecnico, $pragas_selecionadas);
 
     if ($stmt->execute()) {
         $message = "Serviço agendado com sucesso!";
@@ -89,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="container mt-5">
         <div class="row">
-            <!-- Coluna da esquerda: Informações do Cliente (Agora à esquerda) -->
+            <!--dados na esquerda: informacoes do cliente-->
             <div class="col-md-6">
                 <h3>Informações do Cliente</h3>
                 <ul class="list-group">
@@ -101,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </ul>
             </div>
 
-            <!-- Coluna da direita: Formulário de Agendamento (Agora à direita) -->
+            <!--lado direito: form para agendamento-->
             <div class="col-md-6">
                 <h2>Agendar Serviço para o Cliente: <?php echo htmlspecialchars($row['nome_cliente']); ?></h2>
 
@@ -109,21 +108,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
                 <?php endif; ?>
 
-                <!-- Formulário de agendamento -->
+                <!--form-->
                 <form method="POST" action="agendarservico.php?id_contrato=<?php echo $id_contrato; ?>">
-                    <!-- Data do Serviço -->
+                    <!--data-->
                     <div class="mb-3">
                         <label for="data_agendada" class="form-label">Data do Serviço</label>
                         <input type="date" class="form-control" id="data_agendada" name="data_agendada" required>
                     </div>
 
-                    <!-- Hora do Serviço -->
+                    <!--hora-->
                     <div class="mb-3">
                         <label for="hora_servico" class="form-label">Hora do Serviço</label>
                         <input type="time" class="form-control" id="hora_servico" name="hora_servico" required>
                     </div>
 
-                    <!-- Pragas -->
+                    <!--pragas-->
                     <div class="mb-3">
                         <label for="pragas" class="form-label">Pragas a tratar neste serviço</label>
                         <select multiple class="form-select" id="pragas" name="pragas[]" required>
@@ -134,29 +133,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             }
                             ?>
                         </select>
-                        <small class="form-text text-muted">Pressione Ctrl (ou Cmd no Mac) para selecionar múltiplas pragas.</small>
+                        <small class="form-text text-muted">Pressione Ctrl para selecionar múltiplas pragas.</small>
                     </div>
 
-                    <!-- Observações -->
+                    <!--observacoes-->
                     <div class="mb-3">
                         <label for="observacoes" class="form-label">Observações</label>
                         <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
                     </div>
 
-                <!-- Técnico Responsável -->
-                <div class="mb-3">
-                    <label for="tecnico" class="form-label">Técnico Responsável</label>
-                    <select class="form-select" id="tecnico" name="tecnico" required>
-                        <option value="">Selecione um técnico</option>
-                        <?php
-                        if ($result_tecnicos->num_rows > 0) {
-                            while ($row_tecnico = $result_tecnicos->fetch_assoc()) {
-                                echo "<option value='" . $row_tecnico['id'] . "'>" . htmlspecialchars($row_tecnico['nome']) . "</option>";
+                    <!--tecnico-->
+                    <div class="mb-3">
+                        <label for="tecnico" class="form-label">Técnico Responsável</label>
+                        <select class="form-select" id="tecnico" name="tecnico" required>
+                            <option value="">Selecione um técnico</option>
+                            <?php
+                            if ($result_tecnicos->num_rows > 0) {
+                                while ($row_tecnico = $result_tecnicos->fetch_assoc()) {
+                                    echo "<option value='" . $row_tecnico['id_tecnico'] . "'>" . htmlspecialchars($row_tecnico['nome_tecnico']) . "</option>";
+                                }
                             }
-                        }
-                        ?>
-                    </select>
-                </div>
+                            ?>
+                        </select>
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Agendar Serviço</button>
                 </form>

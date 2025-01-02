@@ -5,10 +5,10 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Consultar os serviços
+//select para contactos
 $query = "SELECT * FROM contactos";
 $result = $conn->query($query);
 ?>
@@ -32,7 +32,7 @@ $result = $conn->query($query);
     <div class="container mt-5">
         <h2 class="text-center mb-5">Contactos</h2>
 
-        <!-- button criar serviço -->
+        <!-- button criar contacto -->
         <div class="d-flex justify-content-between mb-4">
             <a href="criar_contacto.php" class="btn btn-primary">Adicionar novo contacto</a>
         </div>
@@ -50,7 +50,7 @@ $result = $conn->query($query);
                 </thead>
                 <tbody>
                     <?php
-                    // Verificar se há pragas para exibir
+                    //verificar se há contactos para exibir
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $status_botao = ($row['visivel'] == 1) ? "Ocultar" : "Mostrar";
@@ -72,7 +72,6 @@ $result = $conn->query($query);
                         echo '<tr><td colspan="5" class="text-center">Nenhum contacto disponível no momento.</td></tr>';
                     }
 
-                    // Fechar a conexão
                     $conn->close();
                     ?>
                 </tbody>

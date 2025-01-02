@@ -5,21 +5,21 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Buscar todos os clientes para o select
+//select para todos os clientes visiveis
 $query = "SELECT id_cliente, nome_cliente FROM clientes WHERE visivel = 1";
 $result = $conn->query($query);
 
-// Verificar se houve erro na consulta
+//verificar se ha erros na consulta
 if (!$result) {
     die("Erro na consulta SQL: " . $conn->error);
 }
 
-// Processar o formulário ao submeter
+//processar form para criar
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obter os dados do formulário
+    //dados do form
     $id_cliente = $_POST['cliente'];
     $morada_contrato = $_POST['morada_contrato'];
     $estabelecimento_contrato = $_POST['estabelecimento_contrato'];
@@ -31,19 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $valor_contrato = isset($_POST['valor_contrato']) ? $_POST['valor_contrato'] : null;
     $dia_descanso = isset($_POST['dia_descanso']) ? implode(", ", $_POST['dia_descanso']) : "";
 
-    // Validações simples
+    //verificar se todos os campos estao preenchidos
     if (empty($id_cliente) || empty($morada_contrato) || empty($estabelecimento_contrato) || empty($data_inicio_contrato) || empty($tipo_contrato)) {
         $error_message = "Por favor, preencha todos os campos obrigatórios!";
     } else {
-        // Preparar a consulta para evitar SQL Injection
+        //eviar sql injection
         $insert_query = $conn->prepare("INSERT INTO contratos 
             (id_cliente, estabelecimento_contrato, morada_contrato, pragas_contrato, meses_contrato, data_inicio_contrato, observacoes_contrato, tipo_contrato, dia_descanso, valor_contrato, visivel) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
 
-        // Bind dos parâmetros
         $insert_query->bind_param("issssssssd", $id_cliente, $estabelecimento_contrato, $morada_contrato, $pragas_contrato, $meses_contrato, $data_inicio_contrato, $observacoes_contrato, $tipo_contrato, $dia_descanso, $valor_contrato);
 
-        // Executar a consulta
+        
         if ($insert_query->execute()) {
             header("Location: tabelacontratos.php?msg=contrato_criado");
             exit();
@@ -70,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="container mt-5">
     <h2 class="text-center mb-4">Criar Contrato</h2>
 
-    <!-- Mensagem de erro -->
+    <!--mensagem de errio-->
     <?php if (isset($error_message)): ?>
         <div class="alert alert-danger"><?php echo htmlspecialchars($error_message); ?></div>
     <?php endif; ?>

@@ -18,18 +18,18 @@ if (isset($_GET['id_cliente'])) {
     $stmt->bind_param('i', $id_cliente);
 
     if ($stmt->execute()) {
-        // Redirecionar para a página de clientes com uma mensagem de sucesso
+        //redirecionar para a pagina de clientes com mensagem de sucesso
         header("Location: tabelaclientes.php?msg=cliente_ocultado");
     } else {
-        // Redirecionar para a página de clientes com uma mensagem de erro
+        //redirecionar para a pagina de clientes com mensagem de erro
         header("Location: tabelaclientes.php?msg=erro_ocultando_cliente");
     }
 
-    // Fechar a conexão
+    
     $stmt->close();
     $conn->close();
 } else {
-    // Redirecionar caso o ID do cliente não seja passado
+    
     header("Location: tabelaclientes.php?msg=erro");
 }
 ?>

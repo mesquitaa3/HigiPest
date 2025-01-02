@@ -16,12 +16,12 @@ function updatePeriod() {
 function addScheduledServices(cell, date) {
     const formattedDate = date.toISOString().split('T')[0];
     
-    // Filtra os serviços para o dia específico
+    //filtra os serviços para o dia específico
     const servicesForDay = servicosAgendados.filter(service => 
         service.data_agendada === formattedDate
     );
 
-    // Adiciona cada serviço à célula do dia
+    //adiciona cada serviço à célula do dia
     servicesForDay.forEach(service => {
         const serviceDiv = document.createElement('div');
         serviceDiv.className = 'scheduled-service';
@@ -159,5 +159,13 @@ document.getElementById('view-daily').addEventListener('click', () => changeView
 document.getElementById('view-weekly').addEventListener('click', () => changeView('weekly'));
 document.getElementById('view-monthly').addEventListener('click', () => changeView('monthly'));
 
-// Inicializar o calendário
+//calendario diario
 changeView('daily');
+
+
+function alterarData(dias) {
+    var dataAtual = new Date(document.getElementById('data-selecionada').innerText);
+    dataAtual.setDate(dataAtual.getDate() + dias);
+    var novaData = dataAtual.toISOString().split('T')[0]; 
+    window.location.href = window.location.pathname + '?data=' + novaData;
+}

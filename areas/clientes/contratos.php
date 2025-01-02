@@ -7,9 +7,9 @@ if ($_SESSION['cargo'] != 'cliente') {
 
 include($_SERVER['DOCUMENT_ROOT'] . "/web/bd/config.php");
 
-$email = $_SESSION['email']; // Email do cliente logado
+$email = $_SESSION['email']; //email do cliente
 
-// Buscar informações do cliente pelo email
+//informacoes do cliente pelo email
 $query_cliente = "SELECT id_cliente FROM clientes WHERE email_cliente = ?";
 $stmt_cliente = $conn->prepare($query_cliente);
 $stmt_cliente->bind_param("s", $email);
@@ -25,7 +25,7 @@ if ($result_cliente->num_rows === 0) {
 $cliente = $result_cliente->fetch_assoc();
 $id_cliente = $cliente['id_cliente'];
 
-// Buscar contratos associados ao cliente
+//select para msotrar contratos associados ao cliente 
 $query_contratos = "SELECT id_contrato, estabelecimento_contrato, morada_contrato, pragas_contrato, 
                            data_inicio_contrato, tipo_contrato, valor_contrato 
                     FROM contratos 
@@ -45,8 +45,10 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Contratos</title>
+    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
     <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark">
@@ -83,7 +85,9 @@ $conn->close();
                             <td><?php echo htmlspecialchars($row['data_inicio_contrato']); ?></td>
                             <td><?php echo htmlspecialchars($row['tipo_contrato']); ?></td>
                             <td><?php echo htmlspecialchars(number_format($row['valor_contrato'], 2)); ?></td>
-                            <td>botoes</td>
+                            <td>
+                                <a href="/web/areas/clientes/ver_contrato.php?id=<?php echo $row['id_contrato']; ?>" class="btn btn-primary btn-sm">Ver</a>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

@@ -6,11 +6,11 @@ if ($_SESSION['cargo'] != 'administrador') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Receber dados do formulário
+    //dados do form
     $tipo_contacto = $_POST['tipo_contacto'];
     $informacao = $_POST['informacao'];
     $ordem = $_POST['ordem'];
-    $visivel = isset($_POST['visivel']) ? 1 : 0; // Checkbox
+    $visivel = isset($_POST['visivel']) ? 1 : 0;
 
     // Inicializar a variável $img com NULL, caso não seja fornecida imagem
     $img_path = NULL;

@@ -1,35 +1,62 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  // Se não for administrador, volta para o login
+    header("Location: /web/login.php");  //se não for administrador, volta para o login
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Definir o mês atual
-$mes_atual = date('F');  // Ex: Janeiro, Fevereiro, etc.
-$mes_atual_num = date('m');  // Número do mês (01, 02, ..., 12)
-$ano_atual = date('Y');  // Ano atual
+//definir mes
+$mes_atual = date('F');  //janeiro, fevereiro, etc.
+$mes_atual_num = date('m');  //número do mês (01, 02, ..., 12)
+$ano_atual = date('Y');  //ano atual
 
-$query = "
-    SELECT agendamentos.*, contratos.*, clientes.nome_cliente 
+$query = "SELECT agendamentos.*, contratos.*, clientes.nome_cliente, tecnicos.nome_tecnico
     FROM agendamentos
     JOIN contratos ON agendamentos.id_contrato = contratos.id_contrato
     JOIN clientes ON contratos.id_cliente = clientes.id_cliente
+    LEFT JOIN tecnicos ON agendamentos.tecnico = tecnicos.id_tecnico
     WHERE MONTH(agendamentos.data_agendada) = $mes_atual_num AND YEAR(agendamentos.data_agendada) = $ano_atual
 ";
+
+$query_visita = "
+    SELECT visitas.*, contratos.*, clientes.nome_cliente, tecnicos.nome_tecnico
+    FROM visitas
+    JOIN contratos ON visitas.id_contrato = contratos.id_contrato
+    JOIN clientes ON contratos.id_cliente = clientes.id_cliente
+    LEFT JOIN tecnicos ON visitas.id_tecnico = tecnicos.id_tecnico
+    WHERE MONTH(visitas.data_visita) = $mes_atual_num AND YEAR(visitas.data_visita) = $ano_atual
+";
+
+$resultvisita = $conn->query($query_visita);
+
+if ($resultvisita) {
+    $visitasAgendadas = $resultvisita->fetch_all(MYSQLI_ASSOC);
+} else {
+    $visitasAgendadas = [];
+}
+
+echo '<script>';
+echo 'const visitasAgendadas = ' . json_encode($visitasAgendadas) . ';';
+echo '</script>';
 
 $result = $conn->query($query);
 $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
 
-// Passando os serviços agendados para o JavaScript
+
+//passar os serviços agendados para o js
 ?>
 
 <script>
     const servicosAgendados = <?php echo json_encode($servicosAgendados); ?>;
 </script>
+
+<script>
+    const visitasAgendadas = <?php echo json_encode($visitasAgendadas); ?>;
+</script>
+
 
 
 
@@ -46,7 +73,7 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/web/assets/styles/styles.css">
     <style>
-        /* Estilos adicionais para o calendário */
+        /*calendário*/
         .day-number {
             position: absolute;
             top: 5px;
@@ -67,14 +94,14 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
     <div class="container mt-5">
         <h2 class="text-center mb-5">Agenda de Serviços</h2>
 
-        <!-- Controles de navegação e visualização -->
+        <!--botoes para avançar e recuar-->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <button id="prev-period" class="btn btn-primary">Anterior</button>
             <h3 id="current-period" class="text-center"><?php echo $mes_atual; ?></h3>
             <button id="next-period" class="btn btn-primary">Próximo</button>
         </div>
 
-        <!-- Botões de alternância de visualização -->
+        <!--botoes para alterar diario, semanal, mensal-->
         <div class="d-flex justify-content-center mb-4">
             <button id="today-button" class="btn btn-success me-2">Hoje</button>
             <button id="view-daily" class="btn btn-outline-secondary me-2">Diário</button>
@@ -82,7 +109,7 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
             <button id="view-monthly" class="btn btn-outline-secondary">Mensal</button>
         </div>
 
-        <!-- Tabela do calendário -->
+        <!--tabela para o calendario-->
         <div class="table-responsive">
             <table class="table table-bordered text-center">
                 <thead id="calendar-headers">
@@ -97,15 +124,19 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
                     </tr>
                 </thead>
                 <tbody id="calendar-body">
-                    <!-- O conteúdo do calendário será gerado dinamicamente pelo JavaScript -->
+                    <!--conteudo do calendario é gerado pelo js-->
                 </tbody>
             </table>
         </div>
 
-        <!-- Adicionando os dados dos serviços agendados ao JavaScript -->
+        <!--adicionar os dados dos serviços agendados ao js-->
         <script>
             const servicosAgendados = <?php echo json_encode($result->fetch_all(MYSQLI_ASSOC)); ?>;
         </script>
+        <script>
+            const visitasAgendadas = <?php echo json_encode($resultvisita->fetch_all(MYSQLI_ASSOC)); ?>;
+        </script>
+        
     </div>
 
     <!-- Scripts -->

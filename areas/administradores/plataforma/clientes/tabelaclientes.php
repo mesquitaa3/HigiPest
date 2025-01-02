@@ -5,14 +5,14 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Consultar os clientes visíveis (visivel = 1)
+//select para clientes visiveis = 1
 $query = "SELECT * FROM clientes WHERE visivel = 1";  
 $result = $conn->query($query);
 
-// Mensagens de status da operação
+
 $message = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == 'cliente_adicionado') {
@@ -49,12 +49,12 @@ if (isset($_GET['msg'])) {
     <div class="container mt-5">
         <h2 class="text-center mb-5">Clientes</h2>
 
-        <!-- Exibe a mensagem de status -->
+        <!--mostrar mensagem-->
         <?php if ($message): ?>
         <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
 
-        <!-- Button adicionar novo cliente -->
+        <!--button adicionar novo cliente-->
         <div class="d-flex justify-content-between mb-4">
             <a href="criarcliente.php" class="btn btn-primary">Adicionar novo cliente</a>
             <a href="clientesocultos.php" class="btn btn-secondary">Mostrar Clientes Ocultos</a>
@@ -74,12 +74,12 @@ if (isset($_GET['msg'])) {
                 </thead>
                 <tbody>
                     <?php
-                    // Verificar se há clientes para exibir
+                    //verificar se ha clientes para mostrar
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            // Definir o texto e a cor do botão com base no estado de visibilidade
+                            
                             $status_botao = ($row['visivel'] == 1) ? "Ocultar" : "Mostrar";
-                            $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success"; // Define a cor do botão
+                            $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success";
 
                             echo '
                             <tr>
@@ -99,7 +99,6 @@ if (isset($_GET['msg'])) {
                         echo '<tr><td colspan="6" class="text-center">Nenhum cliente disponível no momento.</td></tr>';
                     }
 
-                    // Fechar a conexão
                     $conn->close();
                     ?>
                 </tbody>

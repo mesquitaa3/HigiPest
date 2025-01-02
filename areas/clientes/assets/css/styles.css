@@ -1,0 +1,20 @@
+.menu-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.menu-container .nav-link {
+    color: #495057;
+}
+
+.menu-container .nav-link.active {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

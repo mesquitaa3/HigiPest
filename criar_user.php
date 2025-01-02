@@ -28,14 +28,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO utilizadores (nome, email, palavra_passe, cargo) 
             VALUES ('$nome', '$email', '$palavrapasse_encriptada', '$cargo')";
 
-    //verificar se o utilizador é criadp
+    //verificar se o utilizador é criado
     if (mysqli_query($conn, $sql)) {
-        echo "utilizador criado";
+        echo "Utilizador criado com sucesso. ";
+        
+        // Se o cargo for técnico, inserir também na tabela de técnicos
+        if ($cargo == "tecnico") {
+            $id_utilizador = mysqli_insert_id($conn); // Obtém o ID do utilizador recém-criado
+            
+            $sql_tecnico = "INSERT INTO tecnicos (id_tecnico, nome_tecnico, email_tecnico, palavra_passe_tecnico) 
+                            VALUES ('$id_utilizador', '$nome', '$email', '$palavrapasse_encriptada')";
+            
+            if (mysqli_query($conn, $sql_tecnico)) {
+                echo "Dados do técnico também foram adicionados.";
+            } else {
+                echo "Erro ao adicionar dados do técnico: " . mysqli_error($conn);
+            }
+        }
     } else {
         echo "Erro: " . mysqli_error($conn);
     }
 }
-
 
 mysqli_close($conn);
 ?>

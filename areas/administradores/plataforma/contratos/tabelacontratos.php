@@ -5,10 +5,10 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
+//conexao bd
 include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
 
-// Consultar os constratos visíveis (visivel = 1)
+//select para mostrar todos os contratos visiveis
 $query = "SELECT contratos.*, clientes.nome_cliente FROM contratos 
           JOIN clientes ON contratos.id_cliente = clientes.id_cliente 
           WHERE contratos.visivel = 1";  
@@ -16,7 +16,6 @@ $result = $conn->query($query);
 
 
 
-// Mensagens de status da operação
 $message = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == 'contrato_adicionado') {
@@ -25,7 +24,7 @@ if (isset($_GET['msg'])) {
         $message = "Erro ao adicionar contrato!";
     } elseif ($_GET['msg'] == 'contrato_ocultado') {
         $message = "Contrato ocultado com sucesso!";
-    } elseif ($_GET['msg'] == 'erro_ocultando_contrato') { //alterar ocultando
+    } elseif ($_GET['msg'] == 'erro_ocultando_contrato') {
         $message = "Erro ao ocultar Contrato!";
     } elseif ($_GET['msg'] == 'contrato_atualizado') {
         $message = "Contrato atualizado com sucesso!";
@@ -53,12 +52,12 @@ if (isset($_GET['msg'])) {
     <div class="container mt-5">
         <h2 class="text-center mb-5">Contratos</h2>
 
-        <!-- Exibe a mensagem de status -->
+        <!--mensagem-->
         <?php if ($message): ?>
         <div class="alert alert-success"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
 
-        <!-- Button adicionar novo cliente -->
+        <!--button adicionar novo contrato-->
         <div class="d-flex justify-content-between mb-4">
             <a href="criarcontrato.php" class="btn btn-primary">Adicionar novo contrato</a>
             <a href="contratosocultos.php" class="btn btn-secondary">Mostrar Contratos Ocultos</a>
@@ -79,12 +78,11 @@ if (isset($_GET['msg'])) {
                 </thead>
                 <tbody>
                     <?php
-                    // Verificar se há contratos para exibir
+                    //veriuficar se ha contratos para mostrar
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            // Definir o texto e a cor do botão com base no estado de visibilidade
                             $status_botao = ($row['visivel'] == 1) ? "Ocultar" : "Mostrar";
-                            $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success"; // Define a cor do botão
+                            $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success";
 
                             echo '
                             <tr>
@@ -106,7 +104,6 @@ if (isset($_GET['msg'])) {
                         echo '<tr><td colspan="6" class="text-center">Nenhum contrato disponível no momento.</td></tr>';
                     }
 
-                    // Fechar a conexão
                     $conn->close();
                     ?>
                 </tbody>

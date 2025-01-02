@@ -1,15 +1,15 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php"); // Se não for administrador, volta para o login
+    header("Location: /web/login.php"); //se não for administrador, volta para o login
     exit();
 }
 
-// Conexão com a base de dados
+//conexao bd
 include($_SERVER['DOCUMENT_ROOT'] . "/web/bd/config.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Guardar dados do form de criar cliente
+    //guardar dados
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $telemovel = $_POST['telemovel'];
@@ -18,15 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $zona = $_POST['zona'];
     $nif = $_POST['nif'];
 
-    // A palavra-passe será igual ao telemóvel
+    //palavra-passe é igual ao n telemovel (pode ser alterada depois)
     $palavra_passe = $telemovel;
-    $hashed_password = password_hash($palavra_passe, PASSWORD_BCRYPT); // Encriptação segura
+    $hashed_password = password_hash($palavra_passe, PASSWORD_BCRYPT); //encriptar pass
 
-    // Verificar se todos os campos estão preenchidos
+    //verificar se todos os campos estão preenchidos
     if (empty($nome) || empty($email) || empty($telemovel) || empty($morada) || empty($codigo_postal) || empty($zona) || empty($nif)) {
         $error_message = "Por favor, preencha todos os campos!";
     } else {
-        // Verificar se o email já existe
+        //verificar se o email ja existe
         $check_email_query = "SELECT * FROM utilizadores WHERE email = ?";
         $stmt_check_email = $conn->prepare($check_email_query);
         $stmt_check_email->bind_param("s", $email);
@@ -36,36 +36,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($result_check_email->num_rows > 0) {
             $error_message = "Este email já está a ser utilizado. Por favor, use outro email.";
         } else {
-            // Guardar os dados na tabela cliente, visivel = 1 para o cliente estar ativo
+            //guardar dados na tabela cliente, cliente está ativo (visivel = 1)
             $query_cliente = "INSERT INTO clientes (nome_cliente, email_cliente, telemovel_cliente, morada_cliente, codigopostal_cliente, zona_cliente, nif_cliente, visivel)
                               VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
 
-            // Preparar e executar a consulta para inserir dados na tabela cliente
+            
             $stmt_cliente = $conn->prepare($query_cliente);
             $stmt_cliente->bind_param("sssssss", $nome, $email, $telemovel, $morada, $codigo_postal, $zona, $nif);
 
             if ($stmt_cliente->execute()) {
-                // Obter o id_cliente gerado automaticamente (auto_increment)
+                
                 $id_cliente = $stmt_cliente->insert_id;
 
-                // Inserir dados na tabela utilizadores
+                //inserir dados na tabela utilizadores
                 $query_utilizador = "INSERT INTO utilizadores (nome, email, palavra_passe, cargo)
                                      VALUES (?, ?, ?, 'cliente')";
 
-                // Preparar e executar a consulta para inserir dados na tabela utilizadores
                 $stmt_utilizador = $conn->prepare($query_utilizador);
                 $stmt_utilizador->bind_param("sss", $nome, $email, $hashed_password);
 
                 if ($stmt_utilizador->execute()) {
-                    // Redirecionar para a página tabelaclientes.php com mensagem de sucesso
+                    //redirecionar para a página tabelaclientes.php com mensagem de sucesso
                     header("Location: tabelaclientes.php?msg=cliente_adicionado");
                     exit();
                 } else {
-                    // Caso haja erro ao inserir na tabela utilizadores
+                    //caso haja erro ao inserir na tabela utilizadores
                     $error_message = "Erro ao adicionar cliente";
                 }
             } else {
-                // Caso haja erro ao inserir na tabela clientes
+                //caso haja erro ao inserir na tabela clientes
                 $error_message = "Erro ao adicionar cliente";
             }
         }
