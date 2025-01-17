@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+require_once __DIR__ . "/../bd/config.php";
 
 // Verificação do Login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -2,11 +2,7 @@
 session_start();
 
 // Conexão com a base de dados
-$servername = "localhost";
-$username = "web";
-$password = "web";
-$dbname = "web-project";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+require_once __DIR__ . "/../bd/config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);

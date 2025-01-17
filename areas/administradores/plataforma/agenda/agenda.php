@@ -1,12 +1,13 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  //se não for administrador, volta para o login
+    header("Location: /login.php");  //se não for administrador, volta para o login
     exit();
 }
 
 //conexao bd
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+require_once __DIR__ . "/../../../../bd/config.php";
+
 
 //definir mes
 $mes_atual = date('F');  //janeiro, fevereiro, etc.
@@ -69,9 +70,10 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
     <title>Agenda - Serviços Agendados</title>
 
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/styles.css">
+
     <style>
         /*calendário*/
         .day-number {
@@ -140,8 +142,8 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/web/areas/administradores/plataforma/js/calendario.js"></script>  
 </body>
 </html>

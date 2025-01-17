@@ -5,7 +5,8 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+//conexao bd
+require_once __DIR__ . "/../../../../bd/config.php";
 
 if (isset($_GET['id'])) {
     $id_praga = $_GET['id'];

@@ -12,8 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ordem = $_POST['ordem'];
     $visivel = 1; // Sempre visível
 
-    // Incluir configuração de banco de dados
-    include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+    //conexao bd
+    require_once __DIR__ . "/../../../../bd/config.php";
 
     // Preparar consulta com prepared statement
     $stmt = $conn->prepare("INSERT INTO servicos (servico, descricao, img, ordem, visivel) VALUES (?, ?, ?, ?, ?)");
@@ -52,9 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Serviço</title>
     
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/styles.css">
+    
 </head>
 <body>
 
@@ -100,6 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>

@@ -6,7 +6,7 @@ if ($_SESSION['cargo'] != 'administrador') {
 }
 
 //conexao bd
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+require_once __DIR__ . "/../../../../bd/config.php";
 
 //select para todos os clientes visiveis
 $query = "SELECT id_cliente, nome_cliente FROM clientes WHERE visivel = 1";
@@ -59,8 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Contrato</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/styles.css">
+    
 </head>
 <body>
 
@@ -172,8 +174,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

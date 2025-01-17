@@ -2,8 +2,9 @@
 // Iniciar a sessão
 session_start();
 
-// Incluir arquivo de conexão à base de dados
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php"); //script de acesso à base de dados
+//conexao bd
+require_once __DIR__ . "/bd/config.php";
+
 
 // Consultar serviços visíveis na tabela `contactos`
 $sql = "SELECT * FROM contactos WHERE visivel = 1 ORDER BY ordem ASC";
@@ -142,6 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php require('components/footer.php'); ?> <!-- Inclui o footer - footer.php -->
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>

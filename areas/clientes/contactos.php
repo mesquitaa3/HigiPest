@@ -1,6 +1,8 @@
 <?php
 session_start();
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+
+//conexao bd
+require_once __DIR__ . "/../../bd/config.php";
 
 //verificar se quem está logado é um cliente
 if (!isset($_SESSION['id']) || $_SESSION['cargo'] !== 'cliente') {
@@ -50,8 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Contactos</title>
 
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/styles.css">
+    
 </head>
 <body class="bg-light">
 
@@ -98,5 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Scripts Bootstrap -->
     <script src="/web/assets/scripts/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>

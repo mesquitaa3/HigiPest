@@ -7,7 +7,8 @@ if ($_SESSION['cargo'] != 'administrador') {
 
 
 
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+//conexao bd
+require_once __DIR__ . "/../../../../bd/config.php";
 
 //verificar conexao à bd
 if ($conn->connect_error) {
@@ -134,9 +135,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['saveVisit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento de Serviços</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/styles.css">
+    
 </head>
 <body>
     <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
@@ -292,8 +294,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['saveVisit'])) {
     </div>
 </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <script id="tecnicos-data" type="application/json"><?php echo json_encode($tecnicos); ?></script>
         <script src="/web/areas/administradores/assets/js/scripts.js"></script>
     </body>

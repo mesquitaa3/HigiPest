@@ -5,8 +5,8 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-// Incluir arquivo de conexão à base de dados
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+//conexao bd
+require_once __DIR__ . "/../../../../bd/config.php";
 
 // Verificar se o ID do serviço foi passado
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {

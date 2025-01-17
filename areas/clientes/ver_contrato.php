@@ -5,7 +5,8 @@ if ($_SESSION['cargo'] != 'cliente') {
     exit();
 }
 
-include($_SERVER['DOCUMENT_ROOT'] . "/web/bd/config.php");
+//conexao bd
+require_once __DIR__ . "/../../bd/config.php";
 
 $id_contrato = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -37,9 +38,11 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Contrato</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/styles.css">
     <link rel="stylesheet" href="/web/areas/clientes/assets/css/styles.css">
+    
 </head>
 <body>
     <div class="container mt-5">
@@ -114,9 +117,10 @@ $conn->close();
 
     <button><a href="/web/areas/clientes/contratos.php">voltar</button>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/web/areas/clientes/assets/js/scripts.js"></script>
+    
 </body>
 </html>

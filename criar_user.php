@@ -1,12 +1,7 @@
 <?php
-// Conexão com bd
-$servername = "localhost";
-$username = "web";
-$password = "web";
-$dbname = "web-project";
 
-// Criar a conexão
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+//conexao bd
+require_once __DIR__ . "/bd/config.php";
 
 // Verificar se existe conexao
 if (!$conn) {
@@ -98,7 +93,8 @@ mysqli_close($conn);
 </div>
 
 <!-- Link para o Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -5,8 +5,9 @@ if ($_SESSION['cargo'] != 'administrador') {
     exit();
 }
 
-//conect para bd
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+//conexao bd
+require_once __DIR__ . "/../../../../bd/config.php";
+
 
 //verificar se o id do contrato passou atraves da url
 if (isset($_GET['id_contrato'])) {
@@ -78,9 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Agendamento de Serviços</title>
 
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/styles.css">
+    
 </head>
 <body>
 
@@ -163,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

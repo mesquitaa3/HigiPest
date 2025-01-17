@@ -6,7 +6,7 @@ if ($_SESSION['cargo'] != 'administrador') {
 }
 
 //conexao bd
-include ($_SERVER['DOCUMENT_ROOT']."/web/bd/config.php");
+require_once __DIR__ . "/../../../../bd/config.php";
 
 //verifica id cliente
 if (isset($_GET['mostrar']) && is_numeric($_GET['mostrar'])) {

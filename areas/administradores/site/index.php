@@ -14,9 +14,9 @@ if ($_SESSION['cargo'] != 'administrador') {
     <title>Administrador</title>
 
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/styles/styles.css">
 
         <style>
             .btn-index {
@@ -46,20 +46,6 @@ if ($_SESSION['cargo'] != 'administrador') {
     <div class="container mt-5">
         <h2 class="text-center mb-4">Site</h2>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <!-- Editar Página Inicial -->
-            <div class="col">
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="editar_pagina_inicial.php" class="btn-index">Editar Página Inicial</a>
-                </div>
-            </div>
-
-            <!-- Editar Sobre Nós -->
-            <div class="col">
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="editar_sobre_nos.php" class="btn-index">Editar Sobre Nós</a>
-                </div>
-            </div>
-
             <!-- Editar Equipa -->
             <div class="col">
                 <div class="d-flex align-items-center justify-content-center">
@@ -90,7 +76,8 @@ if ($_SESSION['cargo'] != 'administrador') {
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>

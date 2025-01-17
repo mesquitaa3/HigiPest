@@ -1,12 +1,7 @@
 <?php
 session_start();
 
-// Conexão com a base de dados
-$servername = "localhost";
-$username = "web";
-$password = "web";
-$dbname = "web-project";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+require_once __DIR__ . "/../bd/config.php";
 
 if (isset($_GET['token'])) {
     $token = mysqli_real_escape_string($conn, $_GET['token']);
