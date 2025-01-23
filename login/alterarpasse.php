@@ -42,8 +42,8 @@ if (isset($_GET['token'])) {
     <title>Repor Palavra-Passe</title>
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
 </head>
 <body class="d-flex flex-column" style="min-height: 100vh; background-color: #f8f9fa;">
 
@@ -70,7 +70,7 @@ if (isset($_GET['token'])) {
 
     <!-- Scripts Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -25,16 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirecionar para a página correspondente ao cargo do utilizador
         if ($utilizador['cargo'] == 'cliente') {
-            header("Location: /web/areas/clientes/index.php");
+            header("Location: ../areas/clientes/index.php");
         } elseif ($utilizador['cargo'] == 'administrador') {
-            header("Location: /web/areas/administradores/index.php");
+            header("Location: ../areas/administradores/index.php");
         } elseif ($utilizador['cargo'] == 'tecnico') {
-            header("Location: /web/areas/tecnicos/index.php");
+            header("Location: ../areas/tecnicos/index.php");
         }
         exit(); // Certifique-se de usar exit() após header()
     } else {
         // Redirecionar de volta para a página de login com mensagem de erro
-        header("Location: /web/login.php?erro=1");
+        header("Location: ../login.php?erro=1");
         exit();
     }
 }

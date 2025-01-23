@@ -6,9 +6,9 @@
     <title>HigiPest - Login</title>
 
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
@@ -20,10 +20,10 @@
             background-color: #f8f9fa;
         }
         .content {
-            flex: 1; /* Faz com que o conteúdo ocupe o espaço restante */
+            flex: 1;
             display: flex;
-            align-items: center; /* Centraliza verticalmente */
-            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /*centrar verticalmente */
+            justify-content: center; /*centrar horizontalmente*/
         }
     </style>
 </head>
@@ -47,7 +47,7 @@
                             <?php endif; ?>
 
                             <!-- Formulário de login -->
-                            <form action="/web/login/verificar-login.php" method="POST">
+                            <form action="login/verificar-login.php" method="POST">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <div class="input-group">
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg w-100">Entrar</button>
-                                <a href="/web/login/recuperarpasse.php" class="btn btn-link">Recuperar Palavra-Passe</a>
+                                <a href="login/recuperarpasse.php" class="btn btn-link">Recuperar Palavra-Passe</a>
                             </form>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
     <?php require('components/footer.php'); ?> <!-- Inclui o footer - footer.php -->
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

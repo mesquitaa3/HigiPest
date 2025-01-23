@@ -16,9 +16,9 @@ $result = $conn->query($sql);
     <title>HigiPest - Sobre Nós</title>
 
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
     
 </head>
 <body>
@@ -55,7 +55,7 @@ $result = $conn->query($sql);
 
                 <!-- Imagem -->
                 <div class="col-lg-6">
-                    <img src="/web/assets/img/servicos.png" class="img-fluid rounded shadow" alt="HigiPest"> <!-- criar img 600x400 -->
+                    <img src="assets/img/servicos.png" class="img-fluid rounded shadow" alt="HigiPest"> <!-- criar img 600x400 -->
                 </div>
             </div>
         </div>
@@ -115,7 +115,7 @@ $result = $conn->query($sql);
 
     <!-- Bootstrap JS, Popper.js -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script> <!-- dropdown menu -->
 
 </body>
 </html>

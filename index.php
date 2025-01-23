@@ -6,9 +6,9 @@
     <title>HigiPest</title>
     
     <!-- Bootstrap e CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
 
 </head>
 <body class="d-flex flex-column" style="min-height: 100vh;">
@@ -31,7 +31,7 @@
                 <!-- Pedir Orçamento -->
                 <div class="col-md-3 mb-4">
                     <div class="card shadow-sm d-flex flex-column h-100">
-                        <img src="/web/assets/img/orcamento.png" class="card-img-top" alt="Pedir Orçamento">
+                        <img src="assets/img/orcamento.png" class="card-img-top" alt="Pedir Orçamento">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Pedir Orçamento</h5>
                             <p class="card-text">Peça o seu orçamento para o controlo de pragas na sua propriedade ou empresa.</p>
@@ -42,7 +42,7 @@
                 <!-- Onde Estamos -->
                 <div class="col-md-3 mb-4">
                     <div class="card shadow-sm d-flex flex-column h-100">
-                        <img src="/web/assets/img/mapa.png" class="card-img-top" alt="Ver no Mapa">
+                        <img src="assets/img/mapa.png" class="card-img-top" alt="Ver no Mapa">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Onde Estamos</h5>
                             <p class="card-text">Consulte os nossos contactos e moradas, bem como informações sobre como chegar até nós, para mais detalhes e atendimento presencial.</p>
@@ -53,7 +53,7 @@
                 <!-- Serviços -->
                 <div class="col-md-3 mb-4">
                     <div class="card shadow-sm d-flex flex-column h-100">
-                        <img src="/web/assets/img/servicos.png" class="card-img-top" alt="Serviços">
+                        <img src="assets/img/servicos.png" class="card-img-top" alt="Serviços">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Serviços</h5>
                             <p class="card-text">Descubra todos os serviços que disponibilizamos para eliminar pragas e manter o seu ambiente seguro.</p>
@@ -64,7 +64,7 @@
                 <!-- Pragas -->
                 <div class="col-md-3 mb-4">
                     <div class="card shadow-sm d-flex flex-column h-100">
-                        <img src="/web/assets/img/pragas.png" class="card-img-top" alt="Pragas">
+                        <img src="assets/img/pragas.png" class="card-img-top" alt="Pragas">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Pragas</h5>
                             <p class="card-text">Saiba mais sobre as principais pragas que afetam residências e empresas, e como combatê-las.</p>
@@ -80,7 +80,7 @@
     <?php require('components/footer.php'); ?> <!-- Inclui o footer - footer.php -->
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script> <!-- menu dropdown funciona atraves deste script -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script> <!-- menu dropdown funciona atraves deste script -->
 
 </body>
 </html>

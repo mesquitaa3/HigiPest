@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Conexão com a base de dados
+//conexao com a bd
 require_once __DIR__ . "/../bd/config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
