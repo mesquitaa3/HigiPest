@@ -30,40 +30,17 @@ $relativePath = str_repeat('../', substr_count($currentDir, '/') - substr_count(
                     <ul class="dropdown-menu" aria-labelledby="dropdownClientes">
                         <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/clientes/tabelaclientes.php">Clientes</a></li>
                         <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/contratos/tabelacontratos.php">Contratos</a></li>
-                        <li><a class="dropdown-item" href="#">Propostas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownTrabalhos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="dropdownTrabalhos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Trabalhos
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownTrabalhos">
-                        <li><a class="dropdown-item" href="#">Trabalhos Realizados</a></li>
-                        <li><a class="dropdown-item" href="#">Trabalhos Agendados</a></li>
-                        <li><a class="dropdown-item" href="#">Trabalhos Em Atraso</a></li>
+                        <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_realizados.php">Trabalhos Realizados</a></li>
+                        <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_agendados.php">Trabalhos Agendados</a></li>
                         <li><a class="dropdown-item" href="#">Trabalhos Solicitados</a></li>
-                        <li><a class="dropdown-item" href="#">Trabalhos Extra</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownProdutos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Produtos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownProdutos">
-                        <li><a class="dropdown-item" href="#">Produtos</a></li>
-                        <li><a class="dropdown-item" href="#">Documentos - Produtos</a></li>
-                        <li><a class="dropdown-item" href="#">Stock - Produtos</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownListagens" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Listagens
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownListagens">
-                        <li><a class="dropdown-item" href="#">Viaturas</a></li>
-                        <li><a class="dropdown-item" href="#">Documentos</a></li>
-                        <li><a class="dropdown-item" href="#">Equipa</a></li>
-                        <li><a class="dropdown-item" href="#">Análises</a></li>
+                        <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_extra.php">Trabalhos Extra</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -72,12 +49,6 @@ $relativePath = str_repeat('../', substr_count($currentDir, '/') - substr_count(
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownConfiguracoes">
                         <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/site/index.php">Site</a></li>
-                        <li><a class="dropdown-item" href="#">Utilizadores</a></li>
-                        <li><a class="dropdown-item" href="#">Serviços</a></li>
-                        <li><a class="dropdown-item" href="#">Tratamentos</a></li>
-                        <li><a class="dropdown-item" href="#">Equipamentos</a></li>
-                        <li><a class="dropdown-item" href="#">Dispositivos</a></li>
-                        <li><a class="dropdown-item" href="#">Classificação Dispositivos</a></li>
                     </ul>
                 </li>
             </ul>

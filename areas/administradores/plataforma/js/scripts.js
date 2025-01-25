@@ -49,3 +49,47 @@ document.getElementById('saveVisit').addEventListener('click', function() {
     console.log('Botão Guardar');
     document.getElementById('createVisitForm').submit();
 });
+
+// Função para imprimir apenas o relatório
+function imprimirRelatorio() {
+    // Seleciona a seção do relatório pelo ID
+    const conteudo = document.getElementById('relatorio-imprimir').innerHTML;
+
+    // Cria uma nova janela para imprimir
+    const janelaImpressao = window.open('', '', 'width=800,height=600');
+
+    // Adiciona o conteúdo na nova janela
+    janelaImpressao.document.write(`
+        <html>
+            <head>
+                <title>Imprimir Relatório</title>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 20px;
+                    }
+                    .card {
+                        box-shadow: none;
+                        border: none;
+                    }
+                </style>
+            </head>
+            <body>
+                ${conteudo}
+            </body>
+        </html>
+    `);
+
+    // Aguarda o carregamento da nova janela e executa a impressão
+    janelaImpressao.document.close();
+    janelaImpressao.focus();
+    janelaImpressao.print();
+
+    // Fecha a janela de impressão após a ação
+    janelaImpressao.close();
+}
+
+
+
+

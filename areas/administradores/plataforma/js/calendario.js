@@ -15,7 +15,7 @@ function updatePeriod() {
     document.getElementById('current-period').innerText = formatMonthYear(currentDate);
 }
 
-//funcao para adicionar servicos à celula da agenda
+// Função para adicionar serviços à célula da agenda
 function addScheduledServices(cell, date) {
     const formattedDate = date.toISOString().split('T')[0];
     const servicesForDay = servicosAgendados.filter(service => 
@@ -32,11 +32,18 @@ function addScheduledServices(cell, date) {
             Hora: ${service.hora_servico}<br>
             Técnico: ${service.nome_tecnico}<br>
             Serviço: ${service.pragas_tratadas}<br>
+            Tipo de visita: Prevista <br>
             <button onclick="gerarRelatorio(${service.id_agendamento})">Relatório</button>
         `;
         serviceDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
         cell.appendChild(serviceDiv);
     });
+}
+
+// Função para gerar o relatório
+function gerarRelatorio(idAgendamento) {
+    // Redireciona para a nova página de relatório na pasta relatorios
+    window.location.href = `../relatorio/relatorio.php?id=${idAgendamento}`;
 }
 
 //funcao para adicionar visitas à celula da agenda
@@ -45,7 +52,8 @@ function addScheduledVisita(cell, date) {
 
     //filtrar visitas para a data atual
     const visitaForDay = visitasAgendadas.filter(visita => 
-        visita.data_visita.startsWith(formattedDate)
+        visita.data_visita.startsWith(formattedDate) && 
+        (visita.status !== 'pendente' || visita.status === undefined)  // Verifique o status
     );
 
     //adicionar visitas
@@ -60,6 +68,7 @@ function addScheduledVisita(cell, date) {
             <strong>Técnico:</strong> ${visita.nome_tecnico}<br>
             <strong>Serviço:</strong> ${visita.tipo_visita}<br>
             <strong>Observações:</strong> ${visita.observacoes}<br>
+            <strong>Tipo de Visita:</strong> ${visita.tipo_visita}<br>
             <button onclick="gerarRelatorio(${visita.id_visita})">Relatório</button>
         `;
         visitaDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
@@ -69,13 +78,17 @@ function addScheduledVisita(cell, date) {
 
 //combinar serviços e visitas, e ordenação por hora
 const combinedServices = [
-    ...servicosAgendados.map(service => ({
+    ...servicosAgendados.filter(service => 
+        (service.status !== 'pendente' || service.status === undefined)  // Verifique o status
+    ).map(service => ({
         ...service,
         tipo: 'servico', 
         data: service.data_agendada,
         hora: `${service.hora_servico}`
     })),
-    ...visitasAgendadas.map(visita => ({
+    ...visitasAgendadas.filter(visita => 
+        (visita.status !== 'pendente' || visita.status === undefined)  // Verifique o status
+    ).map(visita => ({
         ...visita,
         tipo: 'visita',
         data: visita.data_visita,
@@ -86,7 +99,7 @@ const combinedServices = [
 //ordenar por hora
 combinedServices.sort((a, b) => new Date(a.hora) - new Date(b.hora));
 
-//visualizar diariamente
+//ver agenda diariamente
 function generateDailyCalendar() {
     const calendarBody = document.getElementById('calendar-body');
     const calendarHeaders = document.getElementById('calendar-headers');
@@ -111,7 +124,8 @@ function generateDailyCalendar() {
             <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
             <strong>Hora:</strong> ${item.hora}<br>
             <strong>Técnico:</strong> ${item.nome_tecnico}<br>
-            <strong>Observações:</strong>${item.observacoes}<br>
+            <strong>Observações1:</strong>${item.observacoes}<br>
+            <strong>Tipo de Visita:</strong> ${item.tipo === 'servico' ? 'Prevista' : item.tipo_visita}<br>
             <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
         `;
         itemDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
@@ -124,7 +138,7 @@ function generateDailyCalendar() {
     updatePeriod();
 }
 
-//calendario semanal
+//ver calendario semanal
 function generateWeeklyCalendar() {
     const calendarBody = document.getElementById('calendar-body');
     const calendarHeaders = document.getElementById('calendar-headers');
@@ -153,11 +167,12 @@ function generateWeeklyCalendar() {
             const itemDiv = document.createElement('div');
             itemDiv.className = item.tipo === 'servico' ? 'scheduled-service' : 'scheduled-visita';
             itemDiv.innerHTML = `
-                <strong>Cliente:</strong> ${item.nome_cliente}<br>
-                <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
-                <strong>Hora:</strong> ${item.hora}<br>
-                <strong>Técnico:</strong> ${item.nome_tecnico}<br>
-                <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
+            <strong>Cliente:</strong> ${item.nome_cliente}<br>
+            <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
+            <strong>Hora:</strong> ${item.hora}<br>
+            <strong>Técnico:</strong> ${item.nome_tecnico}<br>
+            <strong>Observações1:</strong>${item.observacoes}<br>
+            <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
             `;
             itemDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
             cell.appendChild(itemDiv);
@@ -171,7 +186,7 @@ function generateWeeklyCalendar() {
     updatePeriod();
 }
 
-//calendaroi mensal
+//ver calendario mensal
 function generateMonthlyCalendar() {
     const calendarBody = document.getElementById('calendar-body');
     const calendarHeaders = document.getElementById('calendar-headers');
@@ -208,11 +223,12 @@ function generateMonthlyCalendar() {
             const itemDiv = document.createElement('div');
             itemDiv.className = item.tipo === 'servico' ? 'scheduled-service' : 'scheduled-visita';
             itemDiv.innerHTML = `
-                <strong>Cliente:</strong> ${item.nome_cliente}<br>
-                <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
-                <strong>Hora:</strong> ${item.hora}<br>
-                <strong>Técnico:</strong> ${item.nome_tecnico}<br>
-                <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
+            <strong>Cliente:</strong> ${item.nome_cliente}<br>
+            <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
+            <strong>Hora:</strong> ${item.hora}<br>
+            <strong>Técnico:</strong> ${item.nome_tecnico}<br>
+            <strong>Observações1:</strong>${item.observacoes}<br>
+            <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
             `;
             itemDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
             cell.appendChild(itemDiv);
@@ -241,7 +257,7 @@ function changeView(view) {
     }
 }
 
-
+//handlers para mudar o período
 document.getElementById('prev-period').addEventListener('click', () => {
     if (currentView === 'daily') {
         currentDate.setDate(currentDate.getDate() - 1);
@@ -284,4 +300,4 @@ document.getElementById('view-weekly').addEventListener('click', () => changeVie
 document.getElementById('view-monthly').addEventListener('click', () => changeView('monthly'));
 
 //calendário inicial na vista diária
-changeView('daily'); //página carrega, vista diária
+changeView('daily');
