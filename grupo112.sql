@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02-Jan-2025 às 18:27
+-- Tempo de geração: 26-Jan-2025 às 00:48
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `web-project`
+-- Banco de dados: `grupo112`
 --
 
 -- --------------------------------------------------------
@@ -36,14 +36,6 @@ CREATE TABLE `agendamentos` (
   `tecnico` int(11) NOT NULL,
   `pragas_tratadas` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `agendamentos`
---
-
-INSERT INTO `agendamentos` (`id_agendamento`, `id_contrato`, `data_agendada`, `observacoes`, `hora_servico`, `tecnico`, `pragas_tratadas`) VALUES
-(20, 15, '2025-01-02', 'teste02012025', '12:00:00', 20, 'Ratos, Baratas, Formigas'),
-(21, 17, '2025-01-03', 'ratos ratazanas a saltar', '10:00:00', 20, 'Ratos, Formigas');
 
 -- --------------------------------------------------------
 
@@ -85,8 +77,8 @@ CREATE TABLE `clientes` (
 INSERT INTO `clientes` (`id_cliente`, `nome_cliente`, `morada_cliente`, `codigopostal_cliente`, `zona_cliente`, `email_cliente`, `telemovel_cliente`, `nif_cliente`, `visivel`) VALUES
 (18, 'cliente', 'Coimbra', '3030-004', 'Centro', 'cliente@cliente.pt', 123123345, 987125622, 1),
 (19, 'Diogo Mesquita', 'rua ', '3040-702', 'Centro', 'dmmesquita31@gmail.com', 965467197, 123123123, 1),
-(20, 'cliente1', 'rua', '3040-702', 'Centro', 'cliente1@cliente', 123123123, 123123123, 1),
-(21, 'alexandra', 'rua da capela 22', '3040-702', 'Centro', 'alexandra@mesquita.pt', 963863363, 123123123, 1);
+(20, 'cliente1', 'rua', '3040-702', 'Centro', 'cliente1@cliente.com', 123123123, 123123123, 1),
+(21, 'alexandra', 'rua da capela 22', '3040-702', 'Centro', 'dmmesquitafifa@gmail.com', 963863363, 123123123, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +154,7 @@ CREATE TABLE `equipa` (
 --
 
 INSERT INTO `equipa` (`id_membro`, `nome_membro`, `funcao`, `img`, `ordem`, `visivel`) VALUES
-(3, 'Diogo Mesquita', 'Gerente', NULL, 1, 1);
+(3, 'Diogo Mesquita', 'teste', NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -190,6 +182,35 @@ INSERT INTO `pragas` (`id_praga`, `praga`, `descricao`, `img`, `ordem`, `visivel
 (8, 'Moscas', 'Os insetos voadores podem ser bastante irritantes e representam riscos à saúde devido às doenças que podem transmitir. Para controlar infestações, é possível adotar medidas simples e sem custos, como:\r\nManter portas e janelas fechadas.\r\nArmazenar alimento', '/web/uploads/moscas.jpg', 4, 1),
 (9, 'Aves', 'As aves podem ser uma praga significativa, causando diversos problemas:\r\nDanos à propriedade: Estragam telhas, bloqueiam caleiras e corroem materiais com seus dejetos.\r\nAgressividade: Podem atacar pessoas, especialmente durante a época de reprodução.\r\nTra', '/web/uploads/aves.jpg', 5, 1),
 (10, 'Térmitas', 'As térmitas são insetos que se alimentam de madeira e materiais celulósicos, representando uma séria ameaça para estruturas de edifícios. Existem duas espécies principais associadas a danos em construções:\r\nTérmitas da madeira húmida:\r\nPreferem madeira em', '/web/uploads/termitas.png', 6, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `relatorios`
+--
+
+CREATE TABLE `relatorios` (
+  `id_relatorio` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `id_estabelecimento` int(11) NOT NULL,
+  `id_tecnico` int(11) NOT NULL,
+  `data_finalizacao` datetime NOT NULL,
+  `arquivo_relatorio` varchar(255) DEFAULT NULL,
+  `enviado_email` tinyint(1) DEFAULT 0,
+  `atualizado_em` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `criado_em` datetime DEFAULT current_timestamp(),
+  `id_agendamento` int(11) DEFAULT NULL,
+  `id_visita` int(11) DEFAULT NULL,
+  `descricao` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `relatorios`
+--
+
+INSERT INTO `relatorios` (`id_relatorio`, `id_cliente`, `id_estabelecimento`, `id_tecnico`, `data_finalizacao`, `arquivo_relatorio`, `enviado_email`, `atualizado_em`, `criado_em`, `id_agendamento`, `id_visita`, `descricao`) VALUES
+(18, 20, 15, 22, '0000-00-00 00:00:00', NULL, 0, '2025-01-25 22:03:17', '2025-01-25 22:03:17', 0, 17, 'teste de cortesia'),
+(19, 20, 16, 22, '0000-00-00 00:00:00', NULL, 0, '2025-01-25 22:17:55', '2025-01-25 22:17:55', 0, 18, 'teste extra');
 
 -- --------------------------------------------------------
 
@@ -235,7 +256,8 @@ CREATE TABLE `tecnicos` (
 --
 
 INSERT INTO `tecnicos` (`id_tecnico`, `nome_tecnico`, `email_tecnico`, `palavra_passe_tecnico`, `visivel`) VALUES
-(20, 'Diogo', 'tecnico@tecnico.pt', '$2y$10$cJXq/sqY8zREH5GbykV/Kel/hWALtqvdPJnUuCHVZDc1eeU4BaLO.', 1);
+(20, 'Diogo', 'tecnico@tecnico.pt', '$2y$10$cJXq/sqY8zREH5GbykV/Kel/hWALtqvdPJnUuCHVZDc1eeU4BaLO.', 1),
+(22, 'Alberto', 'testetecnico@tecnico.pt', '$2y$10$922sEzzwrsLY/KI7jmcDpuqKmA.a9YFoWmky7oKK0RKVqGG0oG.Um', 0);
 
 -- --------------------------------------------------------
 
@@ -261,10 +283,11 @@ CREATE TABLE `utilizadores` (
 INSERT INTO `utilizadores` (`id`, `nome`, `email`, `palavra_passe`, `cargo`, `data_criacao`, `reset_token`, `token_expiry`) VALUES
 (11, 'admin', 'admin@admin.pt', '$2y$10$NEmvraNoNb3KuaU8O2qCjelPDbTBDqTLe9HBbw.bzVZ7LYkAN9mlC', 'administrador', '2024-12-28 12:16:28', NULL, NULL),
 (15, 'cliente', 'cliente@cliente.pt', '$2y$10$hdIDKkQJA0rFhhCtimAK2.uDInnogMTdZd1weaA2k8LCh5Cc7ntVS', 'cliente', '2024-12-29 11:27:43', NULL, NULL),
-(16, 'Diogo Mesquita', 'dmmesquita31@gmail.com', '$2y$10$EVINhlPlhD7VaYrgkwpIT.Pn0cBeE2GH8xbYdBuHae.bNVC8W/haG', 'cliente', '2024-12-29 15:28:27', '31dc73edb47a01aacb8ea787570ff8e51a1599c07cd05b16a616e2d7d4384e9f', '2025-01-01 15:09:38'),
-(17, 'cliente1', 'cliente1@cliente', '$2y$10$9tn9GbavTOIVKb0pwpmLSuaTFhPV.xc7mUbnQbkHy8rFQzdtIIjZm', 'cliente', '2025-01-01 13:11:28', NULL, NULL),
+(16, 'Diogo Mesquita', 'dmmesquita31@gmail.com', '$2y$10$EVINhlPlhD7VaYrgkwpIT.Pn0cBeE2GH8xbYdBuHae.bNVC8W/haG', 'cliente', '2024-12-29 15:28:27', 'dec8507c6d26da2d25cd5794fbfab76199cd49a04fc4a1c1bac4c0072a270a47', '2025-01-23 16:46:23'),
+(17, 'cliente1', 'cliente1@cliente.com', '$2y$10$9tn9GbavTOIVKb0pwpmLSuaTFhPV.xc7mUbnQbkHy8rFQzdtIIjZm', 'cliente', '2025-01-01 13:11:28', NULL, NULL),
 (20, 'tecnico', 'tecnico@tecnico.pt', '$2y$10$cJXq/sqY8zREH5GbykV/Kel/hWALtqvdPJnUuCHVZDc1eeU4BaLO.', 'tecnico', '2025-01-02 11:08:02', NULL, NULL),
-(21, 'alexandra', 'alexandra@mesquita.pt', '$2y$10$Ovepx8354e9.8uEoBazmTOD.9xO4zX82qwNU/xwQ3IPAXqhaovxRW', 'cliente', '2025-01-02 15:04:55', NULL, NULL);
+(21, 'alexandra', 'alexandra@mesquita.pt', '$2y$10$Ovepx8354e9.8uEoBazmTOD.9xO4zX82qwNU/xwQ3IPAXqhaovxRW', 'cliente', '2025-01-02 15:04:55', NULL, NULL),
+(22, 'testetecnico', 'testetecnico@tecnico.pt', '$2y$10$922sEzzwrsLY/KI7jmcDpuqKmA.a9YFoWmky7oKK0RKVqGG0oG.Um', 'tecnico', '2025-01-25 20:11:33', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -282,15 +305,6 @@ CREATE TABLE `visitas` (
   `id_tecnico` int(11) DEFAULT NULL,
   `observacoes` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Extraindo dados da tabela `visitas`
---
-
-INSERT INTO `visitas` (`id_visita`, `id_cliente`, `id_contrato`, `tipo_visita`, `data_visita`, `hora_visita`, `id_tecnico`, `observacoes`) VALUES
-(14, 20, 16, 'solicitada', '2025-01-02', '20:01:00', 20, 'mesquita'),
-(15, 21, 17, 'entrega', '2025-01-03', '10:00:00', 20, 'entregar telas ratos'),
-(16, 21, 17, 'cortesia', '2025-01-02', '15:15:00', 20, 'visita de cortesia');
 
 --
 -- Índices para tabelas despejadas
@@ -342,6 +356,15 @@ ALTER TABLE `pragas`
   ADD PRIMARY KEY (`id_praga`);
 
 --
+-- Índices para tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD PRIMARY KEY (`id_relatorio`),
+  ADD KEY `id_cliente` (`id_cliente`),
+  ADD KEY `id_estabelecimento` (`id_estabelecimento`),
+  ADD KEY `id_tecnico` (`id_tecnico`);
+
+--
 -- Índices para tabela `servicos`
 --
 ALTER TABLE `servicos`
@@ -377,7 +400,7 @@ ALTER TABLE `visitas`
 -- AUTO_INCREMENT de tabela `agendamentos`
 --
 ALTER TABLE `agendamentos`
-  MODIFY `id_agendamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_agendamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de tabela `alertas`
@@ -407,13 +430,19 @@ ALTER TABLE `contratos`
 -- AUTO_INCREMENT de tabela `equipa`
 --
 ALTER TABLE `equipa`
-  MODIFY `id_membro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_membro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `pragas`
 --
 ALTER TABLE `pragas`
   MODIFY `id_praga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  MODIFY `id_relatorio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `servicos`
@@ -425,19 +454,19 @@ ALTER TABLE `servicos`
 -- AUTO_INCREMENT de tabela `tecnicos`
 --
 ALTER TABLE `tecnicos`
-  MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `utilizadores`
 --
 ALTER TABLE `utilizadores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de tabela `visitas`
 --
 ALTER TABLE `visitas`
-  MODIFY `id_visita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_visita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restrições para despejos de tabelas
@@ -460,6 +489,14 @@ ALTER TABLE `alertas`
 --
 ALTER TABLE `contratos`
   ADD CONSTRAINT `contratos_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`) ON DELETE CASCADE;
+
+--
+-- Limitadores para a tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD CONSTRAINT `relatorios_ibfk_1` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+  ADD CONSTRAINT `relatorios_ibfk_2` FOREIGN KEY (`id_estabelecimento`) REFERENCES `contratos` (`id_contrato`),
+  ADD CONSTRAINT `relatorios_ibfk_3` FOREIGN KEY (`id_tecnico`) REFERENCES `tecnicos` (`id_tecnico`);
 
 --
 -- Limitadores para a tabela `visitas`
