@@ -1,22 +1,31 @@
 <?php
 session_start();
 
-//verificar se é um tecnico que está logado
+// Verificar se é um técnico que está logado
 if ($_SESSION['cargo'] != 'tecnico') {
     header("Location: /web/login.php");
     exit();
 }
 
-//conexao bd
 require_once __DIR__ . "/../../bd/config.php";
 
-//guardar id do tecnico
+// Obter o ID do técnico da sessão
 $tecnico_id = $_SESSION['id'];
 
-//guardar dia atual
+// Consulta para buscar o nome do técnico
+$query_tecnico = "
+    SELECT nome_tecnico 
+    FROM tecnicos 
+    WHERE id_tecnico = ?
+";
+
+// Guardar id do técnico
+$tecnico_id = $_SESSION['id'];
+
+// Guardar dia atual
 $data_selecionada = isset($_GET['data']) ? $_GET['data'] : date('Y-m-d');
 
-//select para agendamentos do tecnico
+// Select para agendamentos do técnico
 $query_agendamentos = "
     SELECT agendamentos.*, contratos.*, clientes.nome_cliente AS nome_cliente 
     FROM agendamentos 
@@ -24,7 +33,8 @@ $query_agendamentos = "
     JOIN clientes ON contratos.id_cliente = clientes.id_cliente
     WHERE agendamentos.tecnico = ? AND agendamentos.data_agendada = ?
 ";
-//select para visitas do tecnico
+
+// Select para visitas do técnico
 $query_visitas = "
 SELECT visitas.*, contratos.*, clientes.nome_cliente AS nome_cliente
 FROM visitas
@@ -33,17 +43,17 @@ JOIN clientes ON contratos.id_cliente = clientes.id_cliente
 WHERE visitas.id_tecnico = ? AND visitas.data_visita = ?
 ";
 
-//agendamentos
+// Agendamentos
 $stmt = $conn->prepare($query_agendamentos);
 $stmt->bind_param("is", $tecnico_id, $data_selecionada);
 $stmt->execute();
 $result_agendamentos = $stmt->get_result();
 
-//verificar se existem agendamentos
+// Verificar se existem agendamentos
 $agendamentos = [];
 if ($result_agendamentos->num_rows > 0) {
     while ($row = $result_agendamentos->fetch_assoc()) {
-        //Serviço para os agendamentos
+        // Serviço para os agendamentos
         $row['tipo'] = 'Serviço';
         $agendamentos[] = $row;
     }
@@ -52,17 +62,17 @@ if ($result_agendamentos->num_rows > 0) {
 }
 $stmt->close();
 
-//visitas
+// Visitas
 $stmt = $conn->prepare($query_visitas);
 $stmt->bind_param("is", $tecnico_id, $data_selecionada);
 $stmt->execute();
 $result_visitas = $stmt->get_result();
 
-//veriicar se existem visitas
+// Verificar se existem visitas
 $visitas = [];
 if ($result_visitas->num_rows > 0) {
     while ($row = $result_visitas->fetch_assoc()) {
-        //visita para as visitas
+        // Visita para as visitas
         $row['tipo'] = 'Visita';
         $visitas[] = $row;
     }
@@ -71,10 +81,10 @@ if ($result_visitas->num_rows > 0) {
 }
 $stmt->close();
 
-//combinar os agendamentos com as visitas
+// Combinar os agendamentos com as visitas
 $agendamentos_visitas = array_merge($agendamentos, $visitas);
 
-//ordenar por hora (mais cedo para mais tarde)
+// Ordenar por hora (mais cedo para mais tarde)
 usort($agendamentos_visitas, function($a, $b) {
     $horaA = strtotime(($a['hora_servico'] ?? $a['hora_visita']));
     $horaB = strtotime(($b['hora_servico'] ?? $b['hora_visita']));
@@ -96,6 +106,14 @@ usort($agendamentos_visitas, function($a, $b) {
     <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/tecnicos/menu.php'); ?> <!-- Inclui menu para o técnico -->
 
     <div class="container mt-5">
+        <!-- Exibe a mensagem de sucesso, se existir, e a remove da sessão -->
+        <?php if (isset($_SESSION['mensagem_sucesso'])): ?>
+            <div class="alert alert-success text-center" role="alert">
+                <?php echo htmlspecialchars($_SESSION['mensagem_sucesso']); ?>
+            </div>
+            <?php unset($_SESSION['mensagem_sucesso']); // Remove a mensagem para não exibi-la novamente ?>
+        <?php endif; ?>
+
         <h2>Agenda do Técnico</h2>
 
         <?php if (isset($mensagem)): ?>
@@ -106,14 +124,13 @@ usort($agendamentos_visitas, function($a, $b) {
             <div class="alert alert-warning"><?php echo htmlspecialchars($mensagem_visitas); ?></div>
         <?php endif; ?>
 
-        <!--botoes para avançar e recuar nos dias-->
+        <!-- Botões para avançar e recuar nos dias -->
         <div class="d-flex justify-content-between mb-3">
             <button class="btn btn-primary" onclick="alterarData(-1)">Recuar</button>
             <span id="data-selecionada"><?php echo htmlspecialchars($data_selecionada); ?></span>
             <button class="btn btn-primary" onclick="alterarData(1)">Avançar</button>
         </div>
 
-        
         <?php if (!empty($agendamentos_visitas)): ?>
             <table class="table table-striped">
                 <thead>
@@ -161,7 +178,7 @@ usort($agendamentos_visitas, function($a, $b) {
                                 ?>
                             </td>
                             <td>
-                                <button>Relatorio</button> <!-- click para abrir form para preencher relatorio-->
+                                <a href="relatorio.php?id=<?php echo $item['id_agendamento'] ?? $item['id_visita']; ?>" class="btn btn-info">Relatório</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
