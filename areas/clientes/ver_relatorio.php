@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'cliente') {
-    header("Location: /web/login.php");
+    header("Location: /login.php");
     exit();
 }
 

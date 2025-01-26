@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  // Se não for administrador, redireciona para o login
+    header("Location: /login.php");  // Se não for administrador, redireciona para o login
     exit();
 }
 
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar se foi feito upload de uma nova imagem
     if (isset($_FILES['new_img']) && $_FILES['new_img']['error'] == 0) {
         // Definir o diretório de upload
-        $target_dir = "/web/uploads/";
+        $target_dir = "../uploads/";
         $target_file = $target_dir . basename($_FILES['new_img']['name']);
         
         // Mover o arquivo da imagem para o diretório de uploads
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/site/menu.php'); ?> <!-- Inclui menu - menu.php -->
+<?php require_once __DIR__ . "/../menu.php"; ?> <!-- Inclui menu -->
 
     <div class="container mt-5">
         <h2 class="text-center mb-4">Editar Equipa</h2>
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

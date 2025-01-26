@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  // Se não for administrador, redireciona para o login
+    header("Location: /login.php");  // Se não for administrador, redireciona para o login
     exit();
 }
 

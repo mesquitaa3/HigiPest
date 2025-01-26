@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  // Se não for administrador, volta para o login
+    header("Location: /login.php");  // Se não for administrador, volta para o login
     exit();
 }
 
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $img_path = NULL;
 
     // Configurar diretório para upload
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/web/uploads/"; // Caminho absoluto do diretório
+    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "../uploads/"; // Caminho absoluto do diretório
     $upload_ok = true;
 
     // Verificar se o diretório existe
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Mover o arquivo para o diretório desejado
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-            $img_path = "/web/uploads/" . basename($_FILES['img']['name']); // Caminho relativo para a imagem
+            $img_path = "../uploads/" . basename($_FILES['img']['name']); // Caminho relativo para a imagem
             $_SESSION['alert'] = ['type' => 'success', 'message' => 'Arquivo enviado com sucesso!'];
         } else {
             $_SESSION['alert'] = ['type' => 'danger', 'message' => 'Erro ao mover o arquivo para o diretório.'];
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <!-- Menu -->
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/site/menu.php'); ?> <!-- Inclui menu - menu.php -->
+    <?php require_once __DIR__ . "/../menu.php"; ?> <!-- Inclui menu -->
 
 
     <div class="container mt-5">
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Scripts Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
     
 </body>
 </html>

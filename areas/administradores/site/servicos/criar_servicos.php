@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");
+    header("Location: /login.php");
     exit();
 }
 
@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar upload de imagem
     $img_path = NULL;
     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
-        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/web/uploads/";
+        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "../uploads/";
         $target_file = $target_dir . basename($_FILES['img']['name']);
         
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-            $img_path = "/web/uploads/" . basename($_FILES['img']['name']);
+            $img_path = "../uploads/" . basename($_FILES['img']['name']);
         }
     }
 
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/site/menu.php'); ?>
+<?php require_once __DIR__ . "/../menu.php"; ?> <!-- Inclui menu -->
 
     <div class="container mt-5">
         <h2 class="text-center">Adicionar Serviço</h2>
@@ -95,14 +95,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Adicionar Serviço</button>
-                <a href="/web/areas/administradores/site/servicos/servicos.php" class="btn btn-primary">Voltar</a>
+                <a href="../servicos/servicos.php" class="btn btn-primary">Voltar</a>
             </div>
         </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
     
 </body>
 </html>

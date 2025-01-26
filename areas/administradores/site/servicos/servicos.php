@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  //se não for administrador, volta para o login
+    header("Location: /login.php");  //se não for administrador, volta para o login
     exit();
 }
 
@@ -28,7 +28,7 @@ $result = $conn->query($query);
 </head>
 <body>
 
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/site/menu.php'); ?> <!-- Inclui menu - menu.php -->
+<?php require_once __DIR__ . "/../menu.php"; ?> <!-- Inclui menu -->
 
     <div class="container mt-5">
         <h2 class="text-center mb-5">Serviços</h2>
@@ -93,12 +93,12 @@ $result = $conn->query($query);
         </div>
         <!-- Button voltar para index-site -->
         <div class="d-flex justify-content-between mb-4">
-            <a href="/web/areas/administradores/site/index.php" class="btn btn-primary">Voltar</a>
+            <a href="../index.php" class="btn btn-primary">Voltar</a>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
