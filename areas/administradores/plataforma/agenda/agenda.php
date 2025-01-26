@@ -91,7 +91,7 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
     </style>
 </head>
 <body>
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
+    <?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
 
     <div class="container mt-5">
         <h2 class="text-center mb-5">Agenda de Serviços</h2>
@@ -143,7 +143,7 @@ $servicosAgendados = $result->fetch_all(MYSQLI_ASSOC);
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/web/areas/administradores/plataforma/js/calendario.js"></script>  
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/calendario.js"></script>
 </body>
 </html>

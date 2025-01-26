@@ -61,7 +61,7 @@ if ($id_relatorio) {
     <link rel="stylesheet" href="../../../../assets/styles/styles.css">
 </head>
 <body class="bg-light">
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
+<?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
     <div class="container mt-5">
         <?php if (!empty($relatorio)) { ?>
             <h2 class="text-center mb-5">Detalhes do Relatório</h2>
@@ -136,9 +136,9 @@ if ($id_relatorio) {
     });
 </script>
 
-    <script src="/web/areas/administradores/plataforma/js/scripts.js"></script>
+    <script src="../js/scripts.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
     
 </body>
 </html>

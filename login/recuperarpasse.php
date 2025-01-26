@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-//conexao com a bd
+// Conexão com a base de dados
 require_once __DIR__ . "/../bd/config.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($mail->send()) {
                 $_SESSION['flash_message'] = "Email para repor palavra-passe enviado. Verifique o seu email.";
-                header("Location: /web/login.php"); // Redireciona para a página de login
+                header("Location: ../login.php"); // Redireciona para a página de login
                 exit();
             } else {
                 echo "<div class='alert alert-danger'>Falha ao enviar e-mail: " . $mail->ErrorInfo . "</div>";
@@ -61,18 +61,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Recuperar Palavra-Passe</title>
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/styles/styles.css">
     
 </head>
 <body class="d-flex flex-column" style="min-height: 100vh; background-color: #f8f9fa;">
 
-<?php require('../components/menu.php'); ?> <!-- Inclui menu - menu.php -->
-
-
     <div class="container d-flex align-items-center justify-content-center" style="flex: 1;">
-        <div class="row justify-content-center w-100">
+        <div class ="row justify-content-center w-100">
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-lg">
                     <div class="card-body p-5">
@@ -97,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Scripts Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

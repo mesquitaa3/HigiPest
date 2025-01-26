@@ -18,7 +18,7 @@ if (isset($_GET['token'])) {
             $sql_update = "UPDATE utilizadores SET palavra_passe = '$nova_password', reset_token = NULL, token_expiry = NULL WHERE reset_token = '$token'";
             if (mysqli_query($conn, $sql_update)) {
                 echo "<div class='alert alert-success'>Palavra-passe alterada com sucesso. Já pode fazer login com a nova palavra-passe.</div>";
-                header("Location: /web/login.php");
+                header("Location: ../login.php");
                 exit();
             } else {
                 echo "<div class='alert alert-danger'>Erro ao atualizar a palavra-passe.</div>";
@@ -42,8 +42,8 @@ if (isset($_GET['token'])) {
     <title>Repor Palavra-Passe</title>
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../assets/styles/bootstrap.min.css">
 </head>
 <body class="d-flex flex-column" style="min-height: 100vh; background-color: #f8f9fa;">
 
@@ -70,7 +70,7 @@ if (isset($_GET['token'])) {
 
     <!-- Scripts Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

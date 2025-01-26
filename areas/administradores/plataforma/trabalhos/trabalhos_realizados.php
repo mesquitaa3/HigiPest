@@ -26,10 +26,12 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trabalhos Realizados</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
 </head>
 <body>
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
+    
+<?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
+
     <div class="container mt-5">
         <h2 class="text-center mb-4">Trabalhos Realizados</h2>
         <table class="table table-bordered">
@@ -59,7 +61,7 @@ $result = $conn->query($query);
     </div>    
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
     
 </body>
 </html>

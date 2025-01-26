@@ -93,7 +93,7 @@ if (!empty($visita)) {
     <link rel="stylesheet" href="../../../../assets/styles/styles.css">
 </head>
 <body class="bg-light">
-<?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
+<?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
     <div class="container mt-5">
         <?php if (!empty($visita)) { ?>
             <h2 class="text-center mb-5">Relatório da Visita</h2>

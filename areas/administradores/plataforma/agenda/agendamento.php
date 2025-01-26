@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");
+    header("Location: /login.php");
     exit();
 }
 
@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['saveVisit'])) {
     
 </head>
 <body>
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
+    <?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
 
     <?php if (isset($_SESSION['message'])): ?>
     <div class="alert alert-<?php echo ($_SESSION['message_type'] === 'success') ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
@@ -295,9 +295,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['saveVisit'])) {
 </div>
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../js/calendario.js"></script>
         <script id="tecnicos-data" type="application/json"><?php echo json_encode($tecnicos); ?></script>
-        <script src="/web/areas/administradores/assets/js/scripts.js"></script>
     </body>
 </html>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");
+    header("Location: /login.php");
     exit();
 }
 
@@ -62,12 +62,12 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Contrato (Administração)</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.css">
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.css">
+    <link rel="stylesheet" href="../../../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../assets/styles/styles.css">
 </head>
 <body>
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?> <!-- Inclui menu - menu.php -->
+<?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
     <div class="container mt-5">
         <h1 class="text-center mb-4">Detalhes do Contrato</h1>
         
@@ -169,7 +169,7 @@ $conn->close();
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Seção padrão que deve estar visível ao carregar a página

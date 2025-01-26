@@ -200,11 +200,13 @@ function generateMonthlyCalendar() {
 
     let row = document.createElement('tr');
 
+    // Adiciona células vazias para os dias que não pertencem ao mês
     for (let i = 0; i < startDay; i++) {
         const cell = document.createElement('td');
         row.appendChild(cell);
     }
 
+    // Adiciona os dias do mês
     for (let day = 1; day <= totalDays; day++) {
         const cell = document.createElement('td');
         const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
@@ -214,7 +216,7 @@ function generateMonthlyCalendar() {
         dayNumber.innerText = day;
         cell.appendChild(dayNumber);
     
-        //filtrar e adicionar as visitas e serviços para o dia atual
+        // Filtrar e adicionar as visitas e serviços para o dia atual
         const itemsForDay = combinedServices.filter(item => 
             item.data.startsWith(date.toISOString().split('T')[0])
         );
@@ -223,12 +225,12 @@ function generateMonthlyCalendar() {
             const itemDiv = document.createElement('div');
             itemDiv.className = item.tipo === 'servico' ? 'scheduled-service' : 'scheduled-visita';
             itemDiv.innerHTML = `
-            <strong>Cliente:</strong> ${item.nome_cliente}<br>
-            <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
-            <strong>Hora:</strong> ${item.hora}<br>
-            <strong>Técnico:</strong> ${item.nome_tecnico}<br>
-            <strong>Observações1:</strong>${item.observacoes}<br>
-            <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
+                <strong>Cliente:</strong> ${item.nome_cliente}<br>
+                <strong>Estabelecimento:</strong> ${item.estabelecimento_contrato}<br>
+                <strong>Hora:</strong> ${item.hora}<br>
+                <strong>Técnico:</strong> ${item.nome_tecnico}<br>
+                <strong>Observações:</strong> ${item.observacoes}<br>
+                <button onclick="gerarRelatorio(${item.id_agendamento || item.id_visita})">Relatório</button>
             `;
             itemDiv.style.cssText = 'font-size: 15px; margin-bottom: 5px; padding: 2px; border: 1px solid #ccc; border-radius: 3px;';
             cell.appendChild(itemDiv);
@@ -236,10 +238,16 @@ function generateMonthlyCalendar() {
 
         row.appendChild(cell);
 
+        // Se for sábado, adiciona a linha ao corpo do calendário
         if (date.getDay() === 6) {
             calendarBody.appendChild(row);
             row = document.createElement('tr');
         }
+    }
+
+    // Adiciona a última linha se houver dias restantes
+    if (row.children.length > 0) {
+        calendarBody.appendChild(row);
     }
 
     updatePeriod();

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'administrador') {
-    header("Location: /web/login.php");  // Se não for administrador, volta para o login
+    header("Location: /login.php");  // Se não for administrador, volta para o login
     exit();
 }
 
@@ -76,7 +76,7 @@ $conn->close();
 </head>
 <body>
 
-<?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?> <!-- Inclui menu - menu.php -->
+<?php require("../../menu.php"); ?> <!-- Inclui menu - menu.php -->
 
 <div class="container mt-5">
     <h2 class="text-center mb-5">Editar Cliente</h2>
@@ -126,7 +126,7 @@ $conn->close();
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../../../assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
