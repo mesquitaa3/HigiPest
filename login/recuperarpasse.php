@@ -35,8 +35,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->setFrom('dmmesquita0331@gmail.com', 'HigiPest');
             $mail->addAddress($email);  // Enviar para o destino
             $mail->Subject = 'Recuperar Palavra-Passe - HigiPest';
-            $mail->Body    = "Para poder alterar a sua palavra-passe, clique no seguinte link: http://localhost/web/login/alterarpasse.php?token=$token";
+            // Detectar o protocolo (http ou https)
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
 
+            // Detectar o domínio e a porta (se necessário)
+            $host = $_SERVER['HTTP_HOST'];
+
+            // Caminho base do projeto
+            $basePath = dirname($_SERVER['SCRIPT_NAME']);
+            $basePath = rtrim($basePath, '/');
+
+            // Gerar o link completo
+            $mail->Body = "Para poder alterar a sua palavra-passe, clique no seguinte link: $protocol://$host$basePath/alterarpasse.php?token=$token";
+
+
+            
             if ($mail->send()) {
                 $_SESSION['flash_message'] = "Email para repor palavra-passe enviado. Verifique o seu email.";
                 header("Location: ../login.php"); // Redireciona para a página de login

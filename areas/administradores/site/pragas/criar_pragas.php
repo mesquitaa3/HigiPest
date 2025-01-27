@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $visivel = 1; // Sempre visível por padrão
 
     $img_path = NULL;
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "../uploads/";
+    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
     $upload_ok = true;
 
     if (!is_dir($target_dir)) {
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
         $target_file = $target_dir . basename($_FILES['img']['name']);
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-            $img_path = "../uploads/" . basename($_FILES['img']['name']);
+            $img_path = "/uploads/" . basename($_FILES['img']['name']);
         } else {
             $upload_ok = false;
         }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->execute()) {
             $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Praga adicionada com sucesso!'];
-            header("Location: /web/areas/administradores/site/pragas/pragas.php");
+            header("Location: pragas.php");
         } else {
             $_SESSION['flash_message'] = ['type' => 'danger', 'message' => 'Erro ao adicionar praga: ' . $stmt->error];
             header("Location: criar_pragas.php");
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Adicionar Praga</button>
-                <a href="/web/areas/administradores/site/pragas/pragas.php" class="btn btn-primary">Voltar</a>
+                <a href="pragas.php" class="btn btn-primary">Voltar</a>
             </div>
         </form>
     </div>

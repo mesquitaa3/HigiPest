@@ -15,7 +15,7 @@ $query = "
     SELECT relatorios.*, clientes.nome_cliente, contratos.estabelecimento_contrato, tecnicos.nome_tecnico
     FROM relatorios
     JOIN clientes ON relatorios.id_cliente = clientes.id_cliente
-    JOIN contratos ON relatorios.id_estabelecimento = contratos.id_contrato
+    JOIN contratos ON relatorios.id_contrato = contratos.id_contrato
     JOIN tecnicos ON relatorios.id_tecnico = tecnicos.id_tecnico
     ORDER BY relatorios.criado_em DESC
     LIMIT 10
@@ -30,12 +30,12 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administração</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/styles.css">
 </head>
 <body>
 
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/administradores/menu.php'); ?>
+<?php require("menu.php"); ?>
 
     <div class="container mt-5">
         <h2 class="text-center">Últimos Relatórios</h2>
@@ -60,7 +60,7 @@ $result = $conn->query($query);
                         <td>
                             <!-- Botões para visualizar e editar -->
                             <a href="plataforma/relatorio/ver_relatorio.php?id=<?= $row['id_relatorio'] ?>" class="btn btn-info btn-sm">Ver</a>
-                            <a href="editar_relatorio.php?id=<?= $row['id_relatorio'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="plataforma/relatorio/editar_relatorio.php?id=<?= $row['id_relatorio'] ?>" class="btn btn-warning btn-sm">Editar</a>
 
                             <!-- Excluir desativado, botão apenas visível -->
                             <!-- <a href="?delete=<?= $row['id_relatorio'] ?>" class="btn btn-danger btn-sm">Excluir</a> -->
@@ -78,7 +78,7 @@ $result = $conn->query($query);
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 
     
 

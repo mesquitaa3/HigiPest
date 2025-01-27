@@ -26,7 +26,7 @@ if ($id_relatorio) {
         SELECT r.*, c.nome_cliente, c.email_cliente, e.estabelecimento_contrato, t.nome_tecnico
         FROM relatorios r
         JOIN clientes c ON r.id_cliente = c.id_cliente
-        JOIN contratos e ON r.id_estabelecimento = e.id_contrato
+        JOIN contratos e ON r.id_contrato = e.id_contrato
         LEFT JOIN tecnicos t ON r.id_tecnico = t.id_tecnico
         WHERE r.id_relatorio = ?
     ";
@@ -100,7 +100,13 @@ if ($id_relatorio) {
         <?php } ?>
 
         <div>
-            <a href="../../index.php" class="btn btn-secondary mt-3">Voltar</a>
+        <?php if (isset($relatorio['id_contrato'])): ?>
+            <a href="../contratos/vercontrato.php?id_contrato=<?= htmlspecialchars($relatorio['id_contrato'], ENT_QUOTES, 'UTF-8') ?>" 
+            class="btn btn-primary btn-mt3">Voltar</a>
+        <?php else: ?>
+            <span class="text-danger">ID do contrato não encontrado</span>
+        <?php endif; ?>
+
         </div>
     </div>
 

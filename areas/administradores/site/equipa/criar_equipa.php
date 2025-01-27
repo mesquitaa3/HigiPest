@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $img_path = NULL;
 
     // Configurar diretório para upload
-    $target_dir = $_SERVER['DOCUMENT_ROOT'] . "../uploads/"; // Caminho absoluto do diretório
+    $target_dir = __DIR__ . "/../../../../uploads/"; // Caminho absoluto do diretório
     $upload_ok = true;
 
     // Verificar se o diretório existe
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Mover o arquivo para o diretório desejado
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-            $img_path = "../uploads/" . basename($_FILES['img']['name']); // Caminho relativo para a imagem
+            $img_path = "/uploads/" . basename($_FILES['img']['name']); // Caminho relativo para a imagem
             $_SESSION['alert'] = ['type' => 'success', 'message' => 'Arquivo enviado com sucesso!'];
         } else {
             $_SESSION['alert'] = ['type' => 'danger', 'message' => 'Erro ao mover o arquivo para o diretório.'];
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Salvar informações na base de dados
     if ($upload_ok) {
-    //conexao bd
-    require_once __DIR__ . "/../../../../bd/config.php";
+        // Conexão com a base de dados
+        require_once __DIR__ . "/../../../../bd/config.php";
 
         // Verifica se uma imagem foi fornecida, senão insere NULL
         if ($img_path === NULL) {
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Adicionar Membro</button>
-                <a href="/web/areas/administradores/site/equipa/equipa.php" class="btn btn-primary">Voltar</a>
+                <a href="equipa.php" class="btn btn-primary">Voltar</a>
             </div>
         </form>
     </div>

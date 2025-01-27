@@ -2,7 +2,7 @@
 //conexao bd
 require_once __DIR__ . "/bd/config.php";
 
-// Consultar serviços visíveis na tabela `pragas`
+//consultar tudo como visiveis na tabela pragas
 $sql = "SELECT * FROM pragas WHERE visivel = 1 ORDER BY ordem ASC";
 $result = $conn->query($sql);
 
@@ -44,36 +44,34 @@ $result = $conn->query($sql);
     </section>
 
     <!-- Serviços -->
-    <section id="tipos-pragas" class="py-5 bg-light">
+<section id="tipos-pragas" class="py-5 bg-light">
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <?php
-            // Verificar se há pragas para exibir
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '
                     <div class="col">
                         <div class="card h-100 shadow-sm">
-                            <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['praga']) . '" style="height: 200px; object-fit: cover;">
+                            <img src="uploads/' . htmlspecialchars(basename($row['img'])) . '" class="card-img-top" alt="' . htmlspecialchars($row['praga']) . '" style="height: 200px; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">' . htmlspecialchars($row['praga']) . '</h5>
                                 <p class="card-text flex-grow-1">' . htmlspecialchars($row['descricao']) . '</p>
-                                <a href="#" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Saber Mais</a>
+                                <a href="#" class="btn mt-auto fw-bold" style="background-color: #ff8800;">Soluções</a>
                             </div>
                         </div>
                     </div>
                     ';
                 }
             } else {
-                echo '<p class="text-center">Nenhuma praga disponível no momento.</p>';
+                echo '<p class="text-center">Nenhum serviço disponível no momento.</p>';
             }
 
-            // Fechar a conexão
             $conn->close();
             ?>
         </div>
     </div>
-    </section>
+</section>
 
 
     <!-- Footer -->

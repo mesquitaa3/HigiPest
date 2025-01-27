@@ -6,7 +6,7 @@ session_start();
 require_once __DIR__ . "/bd/config.php";
 
 
-// Consultar serviços visíveis na tabela `contactos`
+// Consultar tudo o que for visivel na tabela `contactos`
 $sql = "SELECT * FROM contactos WHERE visivel = 1 ORDER BY ordem ASC";
 $result = $conn->query($sql);
 

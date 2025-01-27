@@ -28,7 +28,7 @@ if ($id_relatorio) {
         SELECT r.*, c.nome_cliente, e.estabelecimento_contrato, t.nome_tecnico, c.email_cliente
         FROM relatorios r
         JOIN clientes c ON r.id_cliente = c.id_cliente
-        JOIN contratos e ON r.id_estabelecimento = e.id_contrato
+        JOIN contratos e ON r.id_contrato = e.id_contrato
         LEFT JOIN tecnicos t ON r.id_tecnico = t.id_tecnico
         WHERE r.id_relatorio = ?
     ";
@@ -56,8 +56,8 @@ if ($id_relatorio) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Relatório</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-</head>
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/styles.css"></head>
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Detalhes do Relatório</h2>
@@ -87,7 +87,7 @@ if ($id_relatorio) {
         </div>
 
         <div>
-            <a href="./index.php" class="btn btn-secondary mt-3">Voltar</a>
+            <a href="trabalhos_realizados.php" class="btn btn-secondary mt-3">Voltar</a>
         </div>
     </div>
 
@@ -129,6 +129,6 @@ if ($id_relatorio) {
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

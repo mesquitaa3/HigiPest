@@ -19,7 +19,7 @@ if (isset($_POST['email']) && isset($_POST['id_relatorio'])) {
     $query = "SELECT r.*, c.nome_cliente, c.email_cliente, e.estabelecimento_contrato, t.nome_tecnico
               FROM relatorios r
               JOIN clientes c ON r.id_cliente = c.id_cliente
-              JOIN contratos e ON r.id_estabelecimento = e.id_contrato
+              JOIN contratos e ON r.id_contrato = e.id_contrato
               LEFT JOIN tecnicos t ON r.id_tecnico = t.id_tecnico
               WHERE r.id_relatorio = ?";
     $stmt = $conn->prepare($query);

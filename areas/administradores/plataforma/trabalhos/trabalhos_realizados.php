@@ -11,7 +11,7 @@ $query = "
     SELECT r.id_relatorio, c.nome_cliente, e.estabelecimento_contrato, t.nome_tecnico, r.descricao, r.criado_em
     FROM relatorios r
     JOIN clientes c ON r.id_cliente = c.id_cliente
-    JOIN contratos e ON r.id_estabelecimento = e.id_contrato
+    JOIN contratos e ON r.id_contrato = e.id_contrato
     LEFT JOIN tecnicos t ON r.id_tecnico = t.id_tecnico
     WHERE r.id_visita IS NOT NULL
     ORDER BY r.criado_em DESC
@@ -40,9 +40,8 @@ $result = $conn->query($query);
                     <th>ID</th>
                     <th>Cliente</th>
                     <th>Estabelecimento</th>
-                    <th>Técnico</th>
-                    <th>Descrição</th>
                     <th>Data</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,9 +50,16 @@ $result = $conn->query($query);
                         <td><?= $row['id_relatorio'] ?></td>
                         <td><?= htmlspecialchars($row['nome_cliente']) ?></td>
                         <td><?= htmlspecialchars($row['estabelecimento_contrato']) ?></td>
-                        <td><?= htmlspecialchars($row['nome_tecnico']) ?></td>
-                        <td><?= htmlspecialchars($row['descricao']) ?></td>
                         <td><?= date('d/m/Y H:i', strtotime($row['criado_em'])) ?></td>
+                        <td>
+                            <!-- Botões para visualizar e editar -->
+                            <a href="../relatorio/ver_relatorio.php?id=<?= $row['id_relatorio'] ?>" class="btn btn-info btn-sm">Ver</a>
+                            <a href="../relatorio/editar_relatorio.php?id=<?= $row['id_relatorio'] ?>" class="btn btn-warning btn-sm">Editar</a>
+
+                            <!-- Excluir desativado, botão apenas visível -->
+                            <!-- <a href="?delete=<?= $row['id_relatorio'] ?>" class="btn btn-danger btn-sm">Excluir</a> -->
+                            <button class="btn btn-danger btn-sm" disabled>Excluir</button>
+                        </td>
                     </tr>
                 <?php } ?>
             </tbody>

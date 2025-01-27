@@ -2,7 +2,7 @@
 //conexao bd
 require_once __DIR__ . "/bd/config.php";
 
-// Consultar serviços visíveis na tabela `equipa`
+//consultar tudo na tabela equipa
 $sql = "SELECT * FROM equipa WHERE visivel = 1 ORDER BY ordem ASC";
 $result = $conn->query($sql);
 
@@ -88,12 +88,11 @@ $result = $conn->query($sql);
         <h2 class="text-center mb-5">A Nossa Equipa</h2>
         <div class="row d-flex justify-content-center align-items-center">
             <?php
-
             if ($result && mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    // Exibir cada membro da equipe
+                    // Mostrar membros da equipa
                     echo '<div class="col-md-4 text-center mb-4">';
-                    echo '<img src="' . htmlspecialchars($row['img']) . '" class="rounded-circle border border-bg border-1 img-fluid" alt="' . htmlspecialchars($row['nome_membro']) . '" style="max-width: 150px; height: auto; object-fit: cover;">';
+                    echo '<img src="uploads/' . htmlspecialchars(basename($row['img'])) . '" class="rounded-circle border border-bg border-1 img-fluid" alt="' . htmlspecialchars($row['nome_membro']) . '" style="max-width: 150px; height: auto; object-fit: cover;">';
                     echo '<h5>' . htmlspecialchars($row['nome_membro']) . '</h5>';
                     echo '<p class="text-muted">' . htmlspecialchars($row['funcao']) . '</p>';
                     echo '</div>';
@@ -102,7 +101,6 @@ $result = $conn->query($sql);
                 echo '<p class="text-center text-muted">Nenhum membro da equipa foi encontrado.</p>';
             }
 
-            // Fechar conexão com a base de dados
             mysqli_close($conn);
             ?>
         </div>

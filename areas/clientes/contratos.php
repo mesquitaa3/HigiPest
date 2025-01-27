@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'cliente') {
-    header("Location: /login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -54,8 +54,8 @@ $conn->close();
 <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/web/areas/clientes/index.php">Área do Cliente</a>
-            <form class="d-flex" action="/web/logout.php" method="POST">
+            <a class="navbar-brand" href="index.php">Área do Cliente</a>
+            <form class="d-flex" action="../../login.php" method="POST">
                 <button class="btn btn-outline-light" type="submit">Logout</button>
             </form>
         </div>
@@ -87,7 +87,7 @@ $conn->close();
                             <td><?php echo htmlspecialchars($row['tipo_contrato']); ?></td>
                             <td><?php echo htmlspecialchars(number_format($row['valor_contrato'], 2)); ?></td>
                             <td>
-                                <a href="/web/areas/clientes/ver_contrato.php?id=<?php echo $row['id_contrato']; ?>" class="btn btn-primary btn-sm">Ver</a>
+                                <a href="ver_contrato.php?id=<?php echo $row['id_contrato']; ?>" class="btn btn-primary btn-sm">Ver</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -100,7 +100,7 @@ $conn->close();
         <?php endif; ?>
         
         <div class="text-center mt-4">
-            <a href="/web/areas/clientes/index.php" class="btn btn-secondary">Voltar</a>
+            <a href="index.php" class="btn btn-secondary">Voltar</a>
         </div>
     </div>
 

@@ -44,7 +44,7 @@ $result = $conn->query($sql);
                     echo '
                     <div class="col">
                         <div class="card h-100 shadow-sm">
-                            <img src="' . htmlspecialchars($row['img']) . '" class="card-img-top" alt="' . htmlspecialchars($row['servico']) . '" style="height: 200px; object-fit: cover;">
+                            <img src="uploads/' . htmlspecialchars(basename($row['img'])) . '" class="card-img-top" alt="' . htmlspecialchars($row['servico']) . '" style="height: 200px; object-fit: cover;">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">' . htmlspecialchars($row['servico']) . '</h5>
                                 <p class="card-text flex-grow-1">' . htmlspecialchars($row['descricao']) . '</p>
@@ -62,7 +62,7 @@ $result = $conn->query($sql);
             ?>
         </div>
     </div>
-    </section>
+</section>
 
 
     <!-- Footer -->

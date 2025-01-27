@@ -98,11 +98,11 @@ if (!empty($visita)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/styles.css">
 </head>
 <body class="bg-light">
-<?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/tecnicos/menu.php'); ?> <!-- Inclui menu para o técnico -->
+<?php require_once 'menu.php'; ?> <!-- Inclui menu para o técnico -->
 
 <div class="container mt-5">
         <?php if (!empty($visita)) { ?>
@@ -146,7 +146,7 @@ if (!empty($visita)) {
                 <form action="gerar_relatorio.php" method="post">
                     <!-- Verificar se os valores das variáveis estão definidos antes de passar para os campos ocultos -->
                      <input type="hidden" name="id_cliente" value="<?= isset($agendamento['id_cliente']) ? htmlspecialchars($agendamento['id_cliente']) : (isset($visita['id_cliente']) ? htmlspecialchars($visita['id_cliente']) : '') ?>">
-<input type="hidden" name="id_estabelecimento" value="<?= isset($agendamento['id_contrato']) ? htmlspecialchars($agendamento['id_contrato']) : (isset($visita['id_contrato']) ? htmlspecialchars($visita['id_contrato']) : '') ?>">
+<input type="hidden" name="id_contrato" value="<?= isset($agendamento['id_contrato']) ? htmlspecialchars($agendamento['id_contrato']) : (isset($visita['id_contrato']) ? htmlspecialchars($visita['id_contrato']) : '') ?>">
                     <input type="hidden" name="id_agendamento" value="<?= isset($agendamento['id_agendamento']) ? htmlspecialchars($agendamento['id_agendamento']) : '' ?>">
                     <input type="hidden" name="id_visita" value="<?= isset($visita['id_visita']) ? htmlspecialchars($visita['id_visita']) : '' ?>">
                     <input type="hidden" name="nome_tecnico" value="<?= htmlspecialchars($id_tecnico) ?>">
@@ -167,7 +167,7 @@ if (!empty($visita)) {
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="/web/areas/tecnicos/js/calendario.js"></script>
 
 

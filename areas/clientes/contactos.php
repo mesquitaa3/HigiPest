@@ -6,7 +6,7 @@ require_once __DIR__ . "/../../bd/config.php";
 
 //verificar se quem está logado é um cliente
 if (!isset($_SESSION['id']) || $_SESSION['cargo'] !== 'cliente') {
-    header("Location: /login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -62,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/web/areas/clientes/index.php">Área de Cliente</a>
-            <form class="d-flex" action="/web/login.php" method="POST">
+            <a class="navbar-brand" href="index.php">Área de Cliente</a>
+            <form class="d-flex" action="../../login.php" method="POST">
                 <button class="btn btn-outline-light" type="submit">Logout</button>
             </form>
         </div>

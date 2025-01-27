@@ -3,7 +3,7 @@ session_start();
 
 
 if (!isset($_SESSION['id'])) {
-    header('Location: /login.php');
+    header('Location: ../../login.php');
     exit();
 }
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password_stmt->execute();
     }
 
-    header("Location: /web/areas/clientes/conta.php?success=1");
+    header("Location: conta.php?success=1");
     exit();
 }
 ?>
@@ -71,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/web/areas/clientes/index.php">Área de Cliente</a>
-            <form class="d-flex" action="/web/login.php" method="POST">
+            <a class="navbar-brand" href="index.php">Área de Cliente</a>
+            <form class="d-flex" action="../../login.php" method="POST">
                 <button class="btn btn-outline-light" type="submit">Logout</button>
             </form>
         </div>
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         <?php endif; ?>
 
-                        <form action="/web/areas/clientes/conta.php" method="POST">
+                        <form action="conta.php" method="POST">
                             <!-- Nome -->
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Nome</label>
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <!-- Botões -->
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">Guardar Alterações</button>
-                                <a href="/web/areas/clientes/index.php" class="btn btn-primary">Voltar</a>
+                                <a href="index.php" class="btn btn-primary">Voltar</a>
                             </div>
                         </form>
                     </div>

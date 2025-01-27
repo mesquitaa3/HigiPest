@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/web/areas/administradores/index.php">Voltar</a>
+                    <a class="nav-link" href="../index.php">Voltar</a>
                 </li>
             </ul>
         </div>
@@ -16,8 +16,8 @@
         <div>
             <ul class="navbar-nav ms-auto"> <!-- ms-auto alinha os itens à direita -->
                 <li class="nav-item">
-                    <a href="/web/login/logout.php" class="nav-link d-flex align-items-center">
-                        <img src="/web/areas/administradores/assets/img/logout.png" alt="Logout" class="img-fluid" style="max-width: 24px; height: auto;">
+                    <a href="../../../login.php" class="nav-link d-flex align-items-center">
+                        <img src="../../../assets/img/logout.png" alt="Logout" class="img-fluid" style="max-width: 24px; height: auto;">
                     </a>
                 </li>
             </ul>

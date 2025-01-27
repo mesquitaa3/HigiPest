@@ -39,47 +39,49 @@ $result = $conn->query($query);
         </div>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Função</th>
-                        <th>Foto</th>
-                        <th>Ordem</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Verificar se há pragas para exibir
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $status_botao = ($row['visivel'] == 1) ? "Ocultar" : "Mostrar";
-                            $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success";
-                            echo '
-                            <tr>
-                                <td>' . htmlspecialchars($row['id_membro']) . '</td>
-                                <td>' . htmlspecialchars($row['nome_membro']) . '</td>
-                                <td>' . htmlspecialchars($row['funcao']) . '</td>
-                                <td><img src="' . htmlspecialchars($row['img']) . '" alt="' . htmlspecialchars($row['nome_membro']) . '" style="width: 100px; height: 60px; object-fit: cover;"></td>
-                                <td>' . htmlspecialchars($row['ordem']) . '</td>
-                                <td>
-                                    <a href="editar_equipa.php?id_membro=' . $row['id_membro'] . '" class="btn btn-warning btn-sm">Editar</a>
-                                    <a href="ocultar_equipa.php?id=' . $row['id_membro'] . '" class="btn ' . $cor_botao . ' btn-sm">' . $status_botao . '</a>
-                                </td>
-                            </tr>
-                            ';
-                        }
-                    } else {
-                        echo '<tr><td colspan="5" class="text-center">Nenhum membro disponível no momento.</td></tr>';
-                    }
+        <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Função</th>
+            <th>Foto</th>
+            <th>Ordem</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Verificar se há membros para exibir
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $status_botao = ($row['visivel'] == 1) ? "Ocultar" : "Mostrar";
+                $cor_botao = ($row['visivel'] == 1) ? "btn-danger" : "btn-success";
+                $img_path = htmlspecialchars(basename($row['img'])); // Obter o nome da imagem
+                echo '
+                <tr>
+                    <td>' . htmlspecialchars($row['id_membro']) . '</td>
+                    <td>' . htmlspecialchars($row['nome_membro']) . '</td>
+                    <td>' . htmlspecialchars($row['funcao']) . '</td>
+                    <td>
+                        <img src="uploads/' . $img_path . '" alt="' . htmlspecialchars($row['nome_membro']) . '" style="width: 100px; height: 60px; object-fit: cover;">
+                    </td>
+                    <td>' . htmlspecialchars($row['ordem']) . '</td>
+                    <td>
+                        <a href="editar_equipa.php?id_membro=' . $row['id_membro'] . '" class="btn btn-warning btn-sm">Editar</a>
+<a href="ocultar_equipa.php?id=' . $row['id_membro'] . '" class="btn ' . $cor_botao . ' btn-sm">' . $status_botao . '</a>                    </td>
+                </tr>
+                ';
+            }
+        } else {
+            echo '<tr><td colspan="6" class="text-center">Nenhum membro disponível no momento.</td></tr>';
+        }
 
-                    // Fechar a conexão
-                    $conn->close();
-                    ?>
-                </tbody>
-            </table>
+        // Fechar a conexão
+        $conn->close();
+        ?>
+    </tbody>
+</table>
         </div>
         <!-- Button voltar para index-site -->
         <div class="d-flex justify-content-between mb-4">

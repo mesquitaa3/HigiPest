@@ -32,16 +32,8 @@ $relativePath = str_repeat('../', substr_count($currentDir, '/') - substr_count(
                         <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/contratos/tabelacontratos.php">Contratos</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdownTrabalhos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Trabalhos
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownTrabalhos">
-                        <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_realizados.php">Trabalhos Realizados</a></li>
-                        <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_agendados.php">Trabalhos Agendados</a></li>
-                        <li><a class="dropdown-item" href="#">Trabalhos Solicitados</a></li>
-                        <li><a class="dropdown-item" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_extra.php">Trabalhos Extra</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $relativePath ?>areas/administradores/plataforma/trabalhos/trabalhos_realizados.php">Trabalhos Realizados</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownConfiguracoes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,7 +50,7 @@ $relativePath = str_repeat('../', substr_count($currentDir, '/') - substr_count(
             <ul class="navbar-nav ms-auto"> <!-- ms-auto alinha os itens à direita -->
                 <li class="nav-item">
                     <a href="<?= $relativePath ?>login/logout.php" class="nav-link d-flex align-items-center">
-                        <img src="<?= $relativePath ?>areas/administradores/assets/img/logout.png" alt="Logout" class="img-fluid" style="max-width: 24px; height: auto;">
+                        <img src="../../../../assets/img/logout.png" alt="Logout" class="img-fluid" style="max-width: 24px; height: auto;">
                     </a>
                 </li>
             </ul>

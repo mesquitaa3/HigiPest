@@ -3,12 +3,12 @@
 //conexao bd
 require_once __DIR__ . "/bd/config.php";
 
-// Verificar se existe conexao
+
 if (!$conn) {
     die("Conexão falhou: " . mysqli_connect_error());
 }
 
-// verificar se o form enviou dados para criar user
+//verificar se o form enviou dados para criar user
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $nome = mysqli_real_escape_string($conn, $_POST['nome']);
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $palavrapasse = mysqli_real_escape_string($conn, $_POST['palavra-passe']);
     $cargo = mysqli_real_escape_string($conn, $_POST['cargo']);
 
-    // encriptar palavra-passe 
+    //encriptar palavra-passe 
     $palavrapasse_encriptada = password_hash($palavrapasse, PASSWORD_DEFAULT);
 
     //inserir dados na tabela de utilizadores
@@ -27,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_query($conn, $sql)) {
         echo "Utilizador criado com sucesso. ";
         
-        // Se o cargo for técnico, inserir também na tabela de técnicos
+        //se o cargo for técnico, inserir também na tabela de técnicos
         if ($cargo == "tecnico") {
-            $id_utilizador = mysqli_insert_id($conn); // Obtém o ID do utilizador recém-criado
+            $id_utilizador = mysqli_insert_id($conn); //
             
             $sql_tecnico = "INSERT INTO tecnicos (id_tecnico, nome_tecnico, email_tecnico, palavra_passe_tecnico) 
                             VALUES ('$id_utilizador', '$nome', '$email', '$palavrapasse_encriptada')";

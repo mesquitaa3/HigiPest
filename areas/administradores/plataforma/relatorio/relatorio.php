@@ -136,7 +136,7 @@ if (!empty($visita)) {
                 <form action="gerar_relatorio.php" method="post">
                     <!-- Verificar se os valores das variáveis estão definidos antes de passar para os campos ocultos -->
                     <input type="hidden" name="id_cliente" value="<?= isset($agendamento['id_cliente']) ? htmlspecialchars($agendamento['id_cliente']) : htmlspecialchars($visita['id_cliente']) ?>">
-                    <input type="hidden" name="id_estabelecimento" value="<?= isset($agendamento['id_contrato']) ? htmlspecialchars($agendamento['id_contrato']) : htmlspecialchars($visita['id_contrato']) ?>">
+                    <input type="hidden" name="id_contrato" value="<?= isset($agendamento['id_contrato']) ? htmlspecialchars($agendamento['id_contrato']) : htmlspecialchars($visita['id_contrato']) ?>">
                     <input type="hidden" name="id_agendamento" value="<?= isset($agendamento['id_agendamento']) ? htmlspecialchars($agendamento['id_agendamento']) : '' ?>">
                     <input type="hidden" name="id_visita" value="<?= isset($visita['id_visita']) ? htmlspecialchars($visita['id_visita']) : '' ?>">
                     <input type="hidden" name="nome_tecnico" value="<?= htmlspecialchars($id_tecnico) ?>">

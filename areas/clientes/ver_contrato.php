@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'cliente') {
-    header("Location: /login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -30,7 +30,7 @@ if ($result->num_rows === 0) {
 $contrato = $result->fetch_assoc();
 
 // Consulta para obter relatórios associados ao contrato
-$query_relatorios = "SELECT * FROM relatorios WHERE id_estabelecimento = ?"; // Altere 'contrato_id' para o nome correto, se necessário
+$query_relatorios = "SELECT * FROM relatorios WHERE id_contrato = ?"; // Altere 'contrato_id' para o nome correto, se necessário
 $stmt_relatorios = $conn->prepare($query_relatorios);
 $stmt_relatorios->bind_param("i", $id_contrato);
 $stmt_relatorios->execute();
@@ -116,7 +116,7 @@ $conn->close();
                                         <td><?php echo htmlspecialchars($relatorio['descricao']); ?></td>
                                         <td><?php echo htmlspecialchars($relatorio['criado_em']); ?></td>
                                         <td>
-                                            <a href="/web/areas/clientes/ver_relatorio.php?id=<?php echo $relatorio['id_relatorio']; ?>" class="btn btn-primary btn-sm">Ver Relatório</a>
+                                            <a href="ver_relatorio.php?id=<?php echo $relatorio['id_relatorio']; ?>" class="btn btn-primary btn-sm">Ver Relatório</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
@@ -133,13 +133,35 @@ $conn->close();
         </div>
     </div>
     <div class="text-center mt-4">
-        <a href="/web/areas/clientes/contratos.php" class="btn btn-secondary">Voltar</a>
+        <a href="contratos.php" class="btn btn-secondary">Voltar</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="/web/areas/clientes/assets/js/scripts.js"></script>
-    
+
+    <script>
+        // JavaScript para alternar entre as abas "Informação" e "Relatórios"
+        $(document).ready(function() {
+            // Quando clicar em uma aba
+            $(".nav-link").click(function() {
+                var target = $(this).data("target"); // Obtém o destino (informacao ou relatorios)
+                
+                // Remove a classe 'active' de todas as abas
+                $(".nav-link").removeClass("active");
+                
+                // Adiciona a classe 'active' à aba clicada
+                $(this).addClass("active");
+                
+                // Esconde todas as seções
+                $(".conteudo-secao").hide();
+                
+                // Mostra a seção correspondente à aba clicada
+                $("#" + target).show();
+            });
+        });
+    </script>
+
 </body>
 </html>

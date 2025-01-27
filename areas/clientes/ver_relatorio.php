@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['cargo'] != 'cliente') {
-    header("Location: /login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -54,7 +54,7 @@ $conn->close();
         </div>
 
         <div class="text-center mt-4">
-            <a href="/web/areas/clientes/ver_contrato.php?id=<?php echo $relatorio['id_estabelecimento']; ?>" class="btn btn-secondary">Voltar</a>
+            <a href="ver_contrato.php?id=<?php echo $relatorio['id_contrato']; ?>" class="btn btn-secondary">Voltar</a>
         </div>
 
     </div>

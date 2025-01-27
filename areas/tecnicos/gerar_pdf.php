@@ -2,19 +2,19 @@
 require_once __DIR__ . "/../../vendor/tecnickcom/tcpdf/tcpdf.php";
 require_once __DIR__ . "/../../bd/config.php";
 
-// Obter o ID do relatório da URL
+//obter o ID do relatório da URL
 $id_relatorio = $_GET['id'] ?? null;
 
 if (!$id_relatorio) {
     die("ID do relatório não fornecido!");
 }
 
-// Consultar o banco de dados para obter os dados do relatório
+//consulta para obter dados do relatorio
 $query_relatorio = "
     SELECT r.*, c.nome_cliente, c.email_cliente, e.estabelecimento_contrato, t.nome_tecnico
     FROM relatorios r
     JOIN clientes c ON r.id_cliente = c.id_cliente
-    JOIN contratos e ON r.id_estabelecimento = e.id_contrato
+    JOIN contratos e ON r.id_contrato = e.id_contrato
     LEFT JOIN tecnicos t ON r.id_tecnico = t.id_tecnico
     WHERE r.id_relatorio = ?
 ";
@@ -24,7 +24,7 @@ $stmt->bind_param("i", $id_relatorio);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Verifica se o relatório foi encontrado
+//verifica se o relatório foi encontrado
 if ($result->num_rows > 0) {
     $relatorio = $result->fetch_assoc();
 } else {
@@ -34,7 +34,7 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 
-// Criação do objeto TCPDF
+//criação do objeto TCPDF
 $pdf = new TCPDF();
 $pdf->AddPage();
 

@@ -67,12 +67,6 @@ if ($_SESSION['cargo'] != 'administrador') {
                 </div>
             </div>
 
-            <!-- Editar Contactos -->
-            <div class="col">
-                <div class="d-flex align-items-center justify-content-center">
-                    <a href="contactos/contactos.php" class="btn-index">Editar Contactos</a>
-                </div>
-            </div>
         </div>
     </div>
 

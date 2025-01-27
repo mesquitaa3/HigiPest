@@ -4,7 +4,7 @@ session_start();
 
 //
 if (!isset($_SESSION['id']) || $_SESSION['cargo'] != 'cliente') {
-    header("Location: /web/login.php");
+    header("Location: ../../login.php");
     exit();
 }
 
@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
     $nome_cliente = $row['nome'];
 } else {
     //caso nao encontre o nome, voltar para a pagina de login
-    header("Location: /web/login.php");
+    header("Location: ../../login.php");
     exit();
 }
 $stmt->close();
@@ -68,7 +68,7 @@ $stmt->close();
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Área de Cliente</a>
-            <form class="d-flex" action="/web/login.php" method="POST">
+            <form class="d-flex" action="../../login.php" method="POST">
                 <button class="btn btn-outline-light" type="submit">Logout</button>
             </form>
         </div>
@@ -82,25 +82,25 @@ $stmt->close();
         <div class="row row-cols-1 row-cols-md-2 g-4 w-100">
             <!-- Contratos -->
             <div class="col">
-                <a href="/web/areas/clientes/contratos.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
+                <a href="contratos.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
                     <h3 class="mb-0">Contratos</h3>
                 </a>
             </div>
             <!-- Documentos -->
             <div class="col">
-                <a href="/web/cliente/documentos.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
+                <a href="" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
                     <h3 class="mb-0">Documentos</h3>
                 </a>
             </div>
             <!-- Conta -->
             <div class="col">
-                <a href="/web/areas/clientes/conta.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
+                <a href="conta.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
                     <h3 class="mb-0">Conta</h3>
                 </a>
             </div>
             <!-- Contactos -->
             <div class="col">
-                <a href="/web/areas/clientes/contactos.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
+                <a href="contactos.php" class="btn btn-primary text-white shadow w-100 h-100 py-4 d-flex justify-content-center align-items-center">
                     <h3 class="mb-0">Contactos</h3>
                 </a>
             </div>

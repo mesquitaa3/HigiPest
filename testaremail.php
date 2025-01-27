@@ -1,14 +1,14 @@
 <?php
-// Destinatário
+//destinario
 $to = "dmmesquita31@gmail.com";
 
-// Assunto
+//assunto
 $subject = "Teste de Email via PHP";
 
-// Mensagem
+//mensagem
 $message = "Este é um email de teste enviado via PHP no XAMPP.";
 
-// Cabeçalhos
+//cabeçalhos
 $headers = "From: your_email@gmail.com";
 
 // Envio

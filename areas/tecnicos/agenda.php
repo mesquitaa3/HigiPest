@@ -1,31 +1,31 @@
 <?php
 session_start();
 
-// Verificar se é um técnico que está logado
+//verifica se é tecnico que está logado
 if ($_SESSION['cargo'] != 'tecnico') {
-    header("Location: /web/login.php");
+    header("Location: /login.php");
     exit();
 }
 
 require_once __DIR__ . "/../../bd/config.php";
 
-// Obter o ID do técnico da sessão
+//obtem id do tecnico da sessao
 $tecnico_id = $_SESSION['id'];
 
-// Consulta para buscar o nome do técnico
+//select para nome do tecnico
 $query_tecnico = "
     SELECT nome_tecnico 
     FROM tecnicos 
     WHERE id_tecnico = ?
 ";
 
-// Guardar id do técnico
+//guardar id do tecnico
 $tecnico_id = $_SESSION['id'];
 
-// Guardar dia atual
+//guardar o dia atual
 $data_selecionada = isset($_GET['data']) ? $_GET['data'] : date('Y-m-d');
 
-// Select para agendamentos do técnico
+//select para agendamentos do técnico
 $query_agendamentos = "
     SELECT agendamentos.*, contratos.*, clientes.nome_cliente AS nome_cliente 
     FROM agendamentos 
@@ -34,7 +34,7 @@ $query_agendamentos = "
     WHERE agendamentos.tecnico = ? AND agendamentos.data_agendada = ?
 ";
 
-// Select para visitas do técnico
+//select para visitas do técnico
 $query_visitas = "
 SELECT visitas.*, contratos.*, clientes.nome_cliente AS nome_cliente
 FROM visitas
@@ -43,13 +43,13 @@ JOIN clientes ON contratos.id_cliente = clientes.id_cliente
 WHERE visitas.id_tecnico = ? AND visitas.data_visita = ?
 ";
 
-// Agendamentos
+//agendamentos
 $stmt = $conn->prepare($query_agendamentos);
 $stmt->bind_param("is", $tecnico_id, $data_selecionada);
 $stmt->execute();
 $result_agendamentos = $stmt->get_result();
 
-// Verificar se existem agendamentos
+//verificar se existem agendamentos
 $agendamentos = [];
 if ($result_agendamentos->num_rows > 0) {
     while ($row = $result_agendamentos->fetch_assoc()) {
@@ -62,13 +62,13 @@ if ($result_agendamentos->num_rows > 0) {
 }
 $stmt->close();
 
-// Visitas
+//visitas
 $stmt = $conn->prepare($query_visitas);
 $stmt->bind_param("is", $tecnico_id, $data_selecionada);
 $stmt->execute();
 $result_visitas = $stmt->get_result();
 
-// Verificar se existem visitas
+//verificar se existem visitas
 $visitas = [];
 if ($result_visitas->num_rows > 0) {
     while ($row = $result_visitas->fetch_assoc()) {
@@ -81,7 +81,7 @@ if ($result_visitas->num_rows > 0) {
 }
 $stmt->close();
 
-// Combinar os agendamentos com as visitas
+//combinar os agendamentos com as visitas
 $agendamentos_visitas = array_merge($agendamentos, $visitas);
 
 // Ordenar por hora (mais cedo para mais tarde)
@@ -98,12 +98,12 @@ usort($agendamentos_visitas, function($a, $b) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda do Técnico</title>
-    <link rel="stylesheet" href="/web/assets/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/web/assets/styles/styles.css">
+    <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/styles/styles.css">
 </head>
 <body>
 
-    <?php require($_SERVER['DOCUMENT_ROOT'] . '/web/areas/tecnicos/menu.php'); ?> <!-- Inclui menu para o técnico -->
+<?php require_once 'menu.php'; ?> <!-- Inclui menu para o técnico -->
 
     <div class="container mt-5">
         <!-- Exibe a mensagem de sucesso, se existir, e a remove da sessão -->
@@ -190,7 +190,7 @@ usort($agendamentos_visitas, function($a, $b) {
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="/web/areas/tecnicos/js/calendario.js"></script>
 
 </body>

@@ -12,7 +12,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Captura os dados do formulário
     $id_cliente = $_POST['id_cliente'] ?? null;
-    $id_estabelecimento = $_POST['id_estabelecimento'] ?? null;
+    $id_contrato = $_POST['id_contrato'] ?? null;
     $id_agendamento = $_POST['id_agendamento'] ?? null; // Caso tenha
     $id_visita = $_POST['id_visita'] ?? null; // Caso tenha
     $id_tecnico = $_POST['id_tecnico'] ?? null;
@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$id_cliente) {
         $errors[] = 'Cliente';
     }
-    if (!$id_estabelecimento) {
-        $errors[] = 'Estabelecimento';
+    if (!$id_contrato) {
+        $errors[] = 'id_contrato';
     }
     if (!$id_tecnico) {
         $errors[] = 'Técnico';
@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // 1. Inserir na tabela de relatórios
             $stmt = $conn->prepare("
-                INSERT INTO relatorios (id_cliente, id_estabelecimento, id_agendamento, id_visita, id_tecnico, descricao)
+                INSERT INTO relatorios (id_cliente, id_contrato, id_agendamento, id_visita, id_tecnico, descricao)
                 VALUES (?, ?, ?, ?, ?, ?)
             ");
-            $stmt->bind_param("iiiiss", $id_cliente, $id_estabelecimento, $id_agendamento, $id_visita, $id_tecnico, $descricao);
+            $stmt->bind_param("iiiiss", $id_cliente, $id_contrato, $id_agendamento, $id_visita, $id_tecnico, $descricao);
             $stmt->execute();
 
             // 2. Remover o agendamento ou visita correspondente
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensagem_sucesso'] = 'Relatório finalizado com sucesso!';
 
             // Redireciona para a página da agenda
-            header("Location: /web/areas/administradores/plataforma/agenda/agenda.php");
+            header("Location: ../agenda/agenda.php");
             exit();
 
         } catch (Exception $e) {

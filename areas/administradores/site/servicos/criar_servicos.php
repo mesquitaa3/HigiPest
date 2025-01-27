@@ -21,11 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar upload de imagem
     $img_path = NULL;
     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
-        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "../uploads/";
+        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/uploads/";
         $target_file = $target_dir . basename($_FILES['img']['name']);
         
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-            $img_path = "../uploads/" . basename($_FILES['img']['name']);
+            $img_path = "/uploads/" . basename($_FILES['img']['name']);
         }
     }
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //executar e verificar se foi criado
     if ($stmt->execute()) {
         $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Serviço adicionado com sucesso!'];
-        header("Location: /web/areas/administradores/site/servicos/servicos.php");
+        header("Location: servicos.php");
         exit();
     } else {
         $_SESSION['flash_message'] = ['type' => 'danger', 'message' => 'Erro ao adicionar serviço.'];

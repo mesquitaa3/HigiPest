@@ -34,7 +34,7 @@ $query_relatorios = "
     SELECT r.id_relatorio, r.descricao, r.criado_em, t.nome_tecnico
     FROM relatorios r
     LEFT JOIN tecnicos t ON r.id_tecnico = t.id_tecnico
-    WHERE r.id_estabelecimento = ?
+    WHERE r.id_contrato = ?
 ";
 $stmt_relatorios = $conn->prepare($query_relatorios);
 $stmt_relatorios->bind_param("i", $id_contrato);
@@ -139,7 +139,7 @@ $conn->close();
                                         <td><?= date('d/m/Y H:i', strtotime($relatorio['criado_em'])) ?></td>
                                         <td><?= htmlspecialchars($relatorio['nome_tecnico'] ?? 'N/A') ?></td>
                                         <td>
-                                            <a href="/web/areas/administradores/plataforma/relatorio/ver_relatorio.php?id=<?= $relatorio['id_relatorio'] ?>" class="btn btn-primary btn-sm">Ver</a>
+                                            <a href="../relatorio/ver_relatorio.php?id=<?= $relatorio['id_relatorio'] ?>" class="btn btn-primary btn-sm">Ver</a>
                                         </td>
                                     </tr>
                                 <?php } ?>

@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Verificar se foi feito upload de uma nova imagem
     if (isset($_FILES['new_img']) && $_FILES['new_img']['error'] == 0) {
         // Definir o diretório de upload
-        $target_dir = "../uploads/";
+        $target_dir = "/uploads/";
         $target_file = $target_dir . basename($_FILES['new_img']['name']);
         
         // Mover o arquivo da imagem para o diretório de uploads
