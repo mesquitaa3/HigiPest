@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['mensagem_sucesso'] = 'Relatório finalizado com sucesso!';
 
             // Redireciona para a página da agenda do técnico
-            header("Location: /web/areas/tecnicos/agenda.php");
+            header("Location: agenda.php");
             exit();
 
         } catch (Exception $e) {

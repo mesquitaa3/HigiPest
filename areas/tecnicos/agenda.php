@@ -191,7 +191,7 @@ usort($agendamentos_visitas, function($a, $b) {
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="/web/areas/tecnicos/js/calendario.js"></script>
+    <script src="js/calendario.js"></script>
 
 </body>
 </html>

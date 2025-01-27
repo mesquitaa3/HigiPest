@@ -108,7 +108,7 @@ if (isset($_GET['msg'])) {
 
         <!-- Button voltar para index-site -->
         <div class="d-flex justify-content-between mb-4">
-            <a href="/web/areas/administradores/index.php" class="btn btn-primary">Voltar</a>
+            <a href="../../index.php" class="btn btn-primary">Voltar</a>
         </div>
     </div>
 

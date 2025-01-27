@@ -64,7 +64,7 @@ $result = $conn->query($query);
                     <td>' . htmlspecialchars($row['nome_membro']) . '</td>
                     <td>' . htmlspecialchars($row['funcao']) . '</td>
                     <td>
-                        <img src="uploads/' . $img_path . '" alt="' . htmlspecialchars($row['nome_membro']) . '" style="width: 100px; height: 60px; object-fit: cover;">
+                        <img src="/uploads/' . $img_path . '" alt="' . htmlspecialchars($row['nome_membro']) . '" style="width: 100px; height: 60px; object-fit: cover;">
                     </td>
                     <td>' . htmlspecialchars($row['ordem']) . '</td>
                     <td>

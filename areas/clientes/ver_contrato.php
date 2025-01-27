@@ -48,7 +48,7 @@ $conn->close();
     <link rel="stylesheet" href="../../assets/styles/bootstrap.css">
     <link rel="stylesheet" href="../../assets/styles/bootstrap.min.css">
     <link rel="stylesheet" href="../../assets/styles/styles.css">
-    <link rel="stylesheet" href="/web/areas/clientes/assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <div class="container mt-5">
